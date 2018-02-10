@@ -33,8 +33,7 @@ angular.module('app')
 					$scope.didUserSubmit = false;
 					$scope.showLoginError = false;
 					$scope.loginError = '';
-					$rootScope.user = data.user;
-					$uibModalInstance.close();
+					$uibModalInstance.close(data.user);
 				} else {
 					$scope.didUserSubmit = false;
 					$scope.showLoginError = true;
