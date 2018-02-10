@@ -15,19 +15,19 @@ var users = {
 		"email" : "zzhangddavid@gmail.com"
 	},
 	"david" : {
-		"name": "David Zhang"
+		"name": "David Zhang",
 		"username": "skyiky",
 		"password": "asdf",
 		"email" : "zzhangddavid@gmail.com"
 	},
 	"blaine" : {
-		"name": "Blaine Huynh"
+		"name": "Blaine Huynh",
 		"username": "spiffykid",
 		"password": "asdf",
 		"email" : "zzhangddavid@gmail.com"
 	},
 	"nessa": {
-		"name": "Vanessa Harrison"
+		"name": "Nessa Harrison",
 		"username": "Lunessa",
 		"password": "asdf",
 		"email" : "zzhangddavid@gmail.com"

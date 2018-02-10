@@ -7,7 +7,7 @@ idCounter = parseInt(idCounter);
 router.delete('/delete', function(req, res) {
     var user = req.body.username;
     var id = req.body.postId
-    var obj = JSON.parse(fs.readFileSync('./donors.json', 'utf8'));
+    var obj = JSON.parse(fs.readFileSync('./routes/donors.json', 'utf8'));
     if (obj[user][id]) {
         delete obj[user][id];
     }   
@@ -23,12 +23,12 @@ router.delete('/delete', function(req, res) {
 });
 
 router.get('/getall', function(req, res, next) {
-    var obj = JSON.parse(fs.readFileSync('./donors.json', 'utf8'));
+    var obj = JSON.parse(fs.readFileSync('./routes/donors.json', 'utf8'));
     res.send({state: "success"}, obj);
 });
 
 router.get('/get', function(req, res, next) {
-    var obj = JSON.parse(fs.readFileSync('./donors.json', 'utf8'));
+    var obj = JSON.parse(fs.readFileSync('./routes/donors.json', 'utf8'));
     var id = req.body.username;
     res.send({state: "success"}, obj[id]);
 });
