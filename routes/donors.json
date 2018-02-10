@@ -1,34 +1,31 @@
-<<<<<<< HEAD
-{"johnson":{"5":{"serviceType":"shelter","serviceContent":"YO I'M DONE WITH PROVIDING SHELTER AHHHHHHHHHHHHHHHHHHH","location":"Vancouver","name":"johnson sun"}},"will":{"0":{"serviceType":"food","serviceContent":"","location":[]}},"blaine":{"0":{"serviceType":"food","serviceContent":"","location":[]}},"david":{"0":{"serviceType":"food","serviceContent":"","location":[]}}}
-=======
 {
 	"johnson": {
-		"0" : {
+		"0001" : {
 			"serviceType": "food",
 			"serviceContent": "",
 			"location": []
 		}
 	},
 	"will": {
-		"0" : {
+		"1001" : {
 			"serviceType": "food",
 			"serviceContent": "",
 			"location": []
 		}
 	},
 	"blaine": {
-		"0" : { 
+		"2001" : { 
 			"serviceType": "food",
 			"serviceContent": "",
 			"location": []
 		}
 	},
 	"david": {
-		"0" : { 
+		"3001" : { 
 			"serviceType": "food",
 			"serviceContent": "",
 			"location": []
 		}
 	},
 }
->>>>>>> 385c6bb368f4126661018ab0dc4840c7e13d66c3
+
