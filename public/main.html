@@ -1,9 +1,20 @@
 <div class="view" ng-controller="mainController">
 	<div class="col-xs-3 view">
 		<h1>Thot Detector</h1>
+		<br/>
 		<span ng-if="isLoggedIn">{{user.name}}</span>
+		<div class="btn-group btn-sidebar-grp">
+			<button class="btn btn-primary" ng-click="openSignUpModal()">Sign Up</button>
+			<button class="btn btn-primary" ng-click="openSignInModal()">Log In</button>
+		</div>
 		<div ng-repeat="post in posts">
 			{{post.serviceContent}}
+		</div>
+		<div ng-if="isLoggedIn">
+			Sign Up
+		</div>
+		<div ng-if="isLoggedIn">
+			Submit a posting
 		</div>
 	</div>
 	<div class="col-xs-9 view">

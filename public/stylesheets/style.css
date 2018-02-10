@@ -58,6 +58,11 @@ p {
 	padding: 0 0 0 0;
 }
 
+.btn-sidebar-grp {
+	text-align: center;
+	left: 35%;
+}
+
 #map {
 	z-index: 10;
 	height: 100%;
