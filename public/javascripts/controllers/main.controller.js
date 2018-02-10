@@ -6,10 +6,11 @@ angular.module('app')
 		$scope.markers = {};
 		$scope.coords = {};
 		$scope.posts = [];
+		$scope.search = "";
 		
 		function initPage() {
 			var mapOptions = {
-				zoom: 15,
+				zoom: 14,
 				center: new google.maps.LatLng(49.2807513, -123.1152712),
 				mapTypeId: google.maps.MapTypeId.ROADMAP,
 				disableDefaultUI: true,
@@ -92,7 +93,8 @@ angular.module('app')
 
 			if (navigator.geolocation) {
 				navigator.geolocation.getCurrentPosition(function (position) {
-					var initialLocation = new google.maps.LatLng(49.2807513, -123.1152712);
+					console.log(position);
+					var initialLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 					$scope.coords.lat = initialLocation.lat();
 					$scope.coords.lng = initialLocation.lng();
 					$scope.map.setCenter(initialLocation);
