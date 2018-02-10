@@ -3,7 +3,7 @@ var router = express.Router();
 
 var users = {
 	"vivan" : {
-		"name": "Vivian Chung"
+		"name": "Vivian Chung",
 		"username": "bibz",
 		"password": "asdf",
 		"email" : "zzhangddavid@gmail.com"
