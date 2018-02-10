@@ -11,3 +11,7 @@ var server = app.listen(8081, function () {
    
    console.log("Example app listening at http://%s:%s", host, port)
 })
+
+var idiot;
+idiot = blaine;
+blaine.kill();
