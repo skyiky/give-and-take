@@ -1,0 +1,22 @@
+{
+	"johnson": {
+		"serviceType": 1,
+		"serviceContent": "",
+		"location": []
+	},
+	"will": {
+		"serviceType": 2,
+		"serviceContent": "",
+		"location": []
+	},
+	"blaine": {
+		"serviceType": 2,
+		"serviceContent": "",
+		"location": []
+	},
+	"david": {
+		"serviceType": 2,
+		"serviceContent": "",
+		"location": []
+	},
+}
