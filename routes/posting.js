@@ -19,18 +19,19 @@ router.delete('/delete', function(req, res) {
     
         console.log("The file was saved!");
     })
-    res.send({state: "success"}, obj);
+    res.send(obj);
 });
 
 router.get('/getall', function(req, res, next) {
     var obj = JSON.parse(fs.readFileSync('./routes/donors.json', 'utf8'));
-    res.send({state: "success"}, obj);
+    //res.status({state: "success"}).send(obj);
+    res.send(obj);
 });
 
 router.get('/get', function(req, res, next) {
     var obj = JSON.parse(fs.readFileSync('./routes/donors.json', 'utf8'));
     var id = req.body.username;
-    res.send({state: "success"}, obj[id]);
+    res.send(obj[id]);
 });
 
 router.post('/add', function(req, res) {
