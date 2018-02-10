@@ -7,9 +7,6 @@ var bodyParser = require('body-parser');
 var auth = require('./routes/auth');
 var index = require('./routes/index');
 var posting = require('./routes/posting');
-var all = require('./routes/getall');
-var me = require('./routes/getmyself');
-var deleteId = require('./routes/delete');
 var app = express();
 
 // view engine setup
@@ -28,9 +25,6 @@ app.use('/', index);
 
 app.use('/post', posting);
 app.use('/auth', auth);
-app.use('/getall', all);
-app.use('/getmyself', me);
-app.use('/delete', deleteId)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
