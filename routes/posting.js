@@ -16,22 +16,26 @@ router.delete('/delete', function(req, res) {
         if (err) {
             return console.log(err);
         }
-    
+
         console.log("The file was saved!");
     })
     res.send(obj);
 });
 
-router.get('/getall', function(req, res, next) {
-    var obj = JSON.parse(fs.readFileSync('./routes/donors.json', 'utf8'));
-    //res.status({state: "success"}).send(obj);
-    res.send(obj);
+router.get('/all', function(req, res) {
+    try {
+        var obj = JSON.parse(fs.readFileSync('./routes/donors.json', 'utf8'));
+    } catch(e) {
+        return res.send({state: 'fail'});
+    }
+
+    return res.send({state: "success"}, obj);
 });
 
-router.get('/get', function(req, res, next) {
-    var obj = JSON.parse(fs.readFileSync('./routes/donors.json', 'utf8'));
-    var id = req.body.username;
-    res.send(obj[id]);
+router.get('/:username', function(req, res, next) {
+    var obj = JSON.parse(fs.readFileSync('./routers/donors.json', 'utf8'));
+    var id = req.params.username;
+    res.send({state: "success"}, obj[id]);
 });
 
 router.post('/add', function(req, res) {
@@ -58,7 +62,7 @@ router.post('/add', function(req, res) {
         if (err) {
             return console.log(err);
         }
-    
+
         console.log("The file was saved!");
     })
 
@@ -70,7 +74,7 @@ router.post('/add', function(req, res) {
 
     return res.send({state: "success"});
 });
-    
+
 
 router.post('/update', function(req, res) {
 
@@ -83,7 +87,7 @@ router.post('/update', function(req, res) {
 
     if (currentData[username]) {
         if (currentData[username][postID]){
-            
+
             var donorData = {};
             donorData.serviceType = req.body.serviceType;
             donorData.serviceContent = req.body.serviceContent;
@@ -103,7 +107,7 @@ router.post('/update', function(req, res) {
         if (err) {
             return console.log(err);
         }
-    
+
         console.log("The file was saved!");
     })
 

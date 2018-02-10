@@ -6,10 +6,11 @@ angular.module('app')
 		$scope.markers = {};
 		$scope.coords = {};
 		$scope.posts = [];
+		$scope.search = "";
 		
 		function initPage() {
 			var mapOptions = {
-				zoom: 15,
+				zoom: 14,
 				center: new google.maps.LatLng(49.2807513, -123.1152712),
 				mapTypeId: google.maps.MapTypeId.ROADMAP,
 				disableDefaultUI: true,
@@ -92,7 +93,7 @@ angular.module('app')
 
 			if (navigator.geolocation) {
 				navigator.geolocation.getCurrentPosition(function (position) {
-					var initialLocation = new google.maps.LatLng(49.2807513, -123.1152712);
+					var initialLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 					$scope.coords.lat = initialLocation.lat();
 					$scope.coords.lng = initialLocation.lng();
 					$scope.map.setCenter(initialLocation);
@@ -105,7 +106,23 @@ angular.module('app')
 				});
 			}
 
-			// get user details
+			var username = $window.sessionStorage.getItem("user");
+
+			$http.get('/auth/user/' + username).success(function(data) {
+				console.log(data);
+				if (data.state === 'success') {
+					$scope.user = data.user;
+					$scope.isLoggedIn = true;
+				}
+
+				$http.get('/post/all').success(function(data) {
+					console.log(data);
+				});
+			}, function (err) {
+				// fail silently
+				console.log(err);
+			});
+
 			// load markers
 
 /*			$http.get('/user').success(function(data) {
@@ -157,10 +174,18 @@ angular.module('app')
 		}
 
 		$scope.openSignInModal = function() {
-			$uibModal.open({
+			var signInModalInstance = $uibModal.open({
 				templateUrl: 'signin.template.html',
 				controller: 'modalController'
-			})
+			});
+
+			signInModalInstance.result.then(function(user) {
+				if (user) {
+					$scope.user = user;
+					$scope.isLoggedIn = true;
+					$window.sessionStorage.setItem("user", user.username);
+				}
+			});
 		}
 
 		$scope.openModal = function() {

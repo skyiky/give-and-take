@@ -2,38 +2,37 @@ var express = require('express');
 var router = express.Router();
 
 var users = {
-	"vivan" : {
+	"bibz" : {
 		"name": "Vivian Chung",
 		"username": "bibz",
 		"password": "asdf",
 		"email" : "zzhangddavid@gmail.com"
 	},
-	"johnson" : {
+	"flyinpiggy" : {
 		"name": "Johnsun Sun",
 		"username": "flyinpiggy",
 		"password": "asdf",
 		"email" : "zzhangddavid@gmail.com"
 	},
-	"david" : {
+	"skyiky" : {
 		"name": "David Zhang",
 		"username": "skyiky",
 		"password": "asdf",
 		"email" : "zzhangddavid@gmail.com"
 	},
-	"blaine" : {
+	"spiffykid" : {
 		"name": "Blaine Huynh",
 		"username": "spiffykid",
 		"password": "asdf",
 		"email" : "zzhangddavid@gmail.com"
 	},
-	"nessa": {
-		"name": "Nessa Harrison",
+	"Lunessa": {
+		"name": "Vanessa Harrison",
 		"username": "Lunessa",
 		"password": "asdf",
 		"email" : "zzhangddavid@gmail.com"
 	}
 };
-// 
 
 /* POST login. */
 router.post('/login', function(req, res, next) {
@@ -41,16 +40,30 @@ router.post('/login', function(req, res, next) {
 	var user = users[req.body.username];
 
 	if (user == null) {
-  		return res.send({state: "user does not exist", user: req.body.username});
+  		return res.send({state: "fail"});
   	}
 
   	if (user.password !== req.body.password) {
   	// return error since password doesn't match
-  	return res.send({state: "password incorrect"});
+  	return res.send({state: "fail"});
     }
 
     // return success + username 
     return res.send({state: 'success', user: user});
+});
+
+router.get('/user/:username', function(req, res, next) {
+	if (!req.params.username) {
+		return res.send({state: 'fail'});
+	}
+
+	var user = users[req.params.username];
+
+	if (!user) {
+		return res.send({state : "fail"});
+	}
+
+	return res.send({state: 'success', user: user});
 });
 
 
