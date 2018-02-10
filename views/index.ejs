@@ -6,14 +6,26 @@
 	<link rel='stylesheet' href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular-route.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular-resource.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.min.js"></script>
 
-	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCa0elBX4ZaSDSnJ2kG9rhG9VEbWYk7ElU" async defer></script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCa0elBX4ZaSDSnJ2kG9rhG9VEbWYk7ElU&callback=angular.noop" async defer></script>
 
 	<link rel='stylesheet' href='/stylesheets/style.css' />
+	<script src="javascripts/app.js"></script>
+	<script type="text/javascript" src='javascripts/controllers/main.controller.js'></script>
+	<script type="text/javascript" src='javascripts/controllers/modal.controller.js'></script>
+	<script type="text/javascript" src='javascripts/no.space.filter.js'></script>
 	<base href="/">
-</head>
-<body>
-	<div id="app"></div>
+</head>																	
+<body ng-app="app">
+	<div class="row">
+		<div class="col-xs-12 view">
+			<div class="view" ng-view></div>
+		</div>
+	</div>
 </body>
 </html>
