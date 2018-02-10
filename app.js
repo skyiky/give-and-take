@@ -6,6 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var auth = require('./routes/auth');
 var index = require('./routes/index');
+var posting = require('./routes/posting');
 var all = require('./routes/getall');
 var me = require('./routes/getmyself');
 var deleteId = require('./routes/delete');
@@ -24,6 +25,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
+
+app.use('/post', posting);
 app.use('/auth', auth);
 app.use('/getall', all);
 app.use('/getmyself', me);
