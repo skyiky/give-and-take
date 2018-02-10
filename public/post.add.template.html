@@ -1,0 +1,27 @@
+<div class="modal-content">
+	<div class="modal-header">
+		<h1>Submit Posting</h1>
+	</div>
+	<div class="modal-body">
+		<div class="panel panel-danger" ng-show="showPostingError">
+			<div class="panel-heading">
+				<h4 class="panel-title">
+					<span>{{postingError}}</span>
+				</h4>
+			</div>
+		</div>
+		<i class="fa fa-spinner fa-spin" ng-show="didUserSubmit"></i>
+		<form ng-submit="submit()" ng-hide="didUserSubmit || showSuccess">
+	<br/>
+	<label>Description</label>
+	<textarea class="form-control" placeholder="Description" ng-model="description"></textarea>
+	<br/>
+	<label>Location</label>
+	<input type="location" class="form-control" placeholder="Location" ng-model="location">
+</form>
+</div>
+<div class="modal-footer">
+	<input type="submit" value="Submit" ng-click="submit()" class="btn btn-primary" style="width: 15%"/>
+	<input type="close" value="Close" ng-click="close()" class="btn btn-default" style="width:15%"/>
+</div>
+</div>

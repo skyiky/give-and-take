@@ -7,6 +7,24 @@ angular.module('app')
 		$scope.loginError = "";
 		$scope.username = "";
 		$scope.password = "";
+		$scope.selectedTypes = [];
+		$scope.types = [
+		{
+			name: 'Food',
+			value: 0,
+		},
+		{
+			name: 'Shelter',
+			value: 1,
+		},
+		{
+			name: 'Clothes',
+			value: 2,
+		},
+		{
+			name: 'Miscellaneous',
+			value: 3,
+		}];
 
 		$scope.close = function() {
 			$uibModalInstance.close();

@@ -1,6 +1,6 @@
 <div class="view" ng-controller="mainController">
 	<div class="col-xs-3 view">
-		<h1>Thot Detector</h1>
+		<h1>Give & Take</h1>
 		<br/>
 		<h3 ng-if="isLoggedIn" class="btn-sidebar-grp">{{user.name}}</h3>
 		<div ng-if="!isLoggedIn" class="btn-group btn-sidebar-grp">
@@ -11,8 +11,12 @@
 			{{post.serviceContent}}
 		</div>
 		<div ng-if="isLoggedIn" class="btn-sidebar-grp">
-			<button class="btn btn-primary" ng-click="openSignUpModal()">
+			<button class="btn btn-primary" ng-click="openAddPostingModal()">
 			<i class="fa fa-plus"></i>  Submit a posting</button>
+		</div>
+		<div ng-if="isLoggedIn" class="btn-sidebar-grp footer">
+			<button class="btn btn-danger" ng-click="logout()">
+			Logout</button>
 		</div>
 	</div>
 	<div class="col-xs-9 view">

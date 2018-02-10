@@ -14,10 +14,10 @@
 		<form ng-submit="submit()" ng-hide="didUserSubmit || showSuccess">
 			<label>Username</label>
 			<input type="username" class="form-control" placeholder="Username" 
-			ng-model="username">
+			ng-model="username" required>
 			<br/>
 			<label>Password</label>
-			<input type="password" class="form-control" placeholder="Password" ng-model="password">
+			<input type="password" class="form-control" placeholder="Password" ng-model="password" required>
 		</form>
 	</div>
 	<div class="modal-footer">
