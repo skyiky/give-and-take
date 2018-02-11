@@ -36,6 +36,13 @@ angular.module('app')
 			ticked: false
 		}];
 
+		if ($scope.post) {
+			$scope.title = $scope.post.title;
+			$scope.description = $scope.post.serviceContent;
+			$scope.selectedTypes = $scope.post.serviceType;
+			$scope.location = $scope.post.location;
+		}
+
 		$scope.close = function() {
 			$uibModalInstance.close();
 		};

@@ -1,1 +1,48 @@
-{"flyinpiggy":{"4":{"serviceType":[{"name":"Food","value":0,"ticked":true}],"serviceContent":"DESC","location":"V6T1Z4","title":"TITLE"}}}
+{
+	"flyinpiggy": {
+		"4": {
+			"serviceType": [{
+				"value": 0,
+				"ticked": true
+			},
+			{
+				"value": 1,
+				"ticked": true
+			},
+			{
+				"value": 2,
+				"ticked": true
+			},
+			{
+				"value": 3,
+				"ticked": true
+			}
+		],
+			"serviceContent": "I offer services such as food, shelter, clothing and more for needful individual! Feel free to drop by!",
+			"location": "V6T1Z4",
+			"title": "Some free food"
+		},
+		"5": {
+			"serviceType": [{
+				"value": 1,
+				"ticked": true
+			},
+			{
+				"value": 0,
+				"ticked": true
+			},
+			{
+				"value": 2,
+				"ticked": true
+			},
+			{
+				"value": 3,
+				"ticked": true
+			}
+		],
+			"serviceContent": "I offer services such as food, shelter, clothing and more for needful individual! Feel free to drop by!",
+			"location": "V6T1Z4",
+			"title": "Giving away water bottles"
+		}
+	}
+}

@@ -63,6 +63,34 @@ p {
 	left: 35%;
 }
 
+.posting-bar {
+	background-color: #33cccc;
+	padding: 15px;
+	margin: 10px 10px;
+	border-radius: 10px;
+}
+
+.modify-post-btn-grp {
+
+}
+
+.icon-list {
+	display: inline-block;
+}
+
+.contentIcon {
+	padding: 0 1px;
+}
+
+.post-title {
+	display: block;
+}
+
+.post-desc {
+	text-align: left;
+	clear: both;
+}
+
 #map {
 	z-index: 10;
 	height: 100%;
