@@ -29,7 +29,7 @@ router.get('/all', function(req, res) {
     } catch(e) {
         return res.send({state: 'fail'});
     }
-    
+
     return res.send({state: "success", data: obj});
 });
 
@@ -92,12 +92,8 @@ router.post('/add', function(req, res) {
             return res.send({state: 'fail'});
         }
     })
-<<<<<<< HEAD
-
+    
     return res.send({state: "success", id: idCounter});
-=======
-    return res.send({state: "success", dataAfter: donorData});
->>>>>>> c71cda07b2f3761ebbe175dfaf5d1f85c5679084
 });
 
 

@@ -168,7 +168,7 @@ angular.module('app')
 						} else if (serviceType.value === 2) {
 							// fix blue
 							fillColor = '#3399FF';
-							strokeColor = '0066FF'
+							strokeColor = '#0066FF'
 						} else {
 							fillColor = '#CC99FF';
 							strokeColor = '#9966FF'
