@@ -76,6 +76,31 @@ angular.module('app')
 			$scope.location = $scope.post.location;
 		}
 
+		$scope.openDeleteMessage = function(message) {
+			var deleteMessageModalInstance = $uibModal.open({
+				templateUrl: 'message.delete.template.html',
+				controller: 'modalController',
+				resolve: {
+					user: function() {
+						return $scope.user;
+					},
+					post: function() {
+						return null;
+					}
+					messages: function() {
+						return $scope.messages;
+					}
+				}
+			});
+
+			deleteMessageModalInstance.result.then(function(message) {
+			});
+		}
+
+		$scope.deleteMessage = function() {
+		
+		}
+
 		$scope.toggleView = function(state) {
 			if (state === 'inbox') {
 				$scope.inboxView = true;

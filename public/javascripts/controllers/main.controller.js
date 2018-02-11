@@ -423,6 +423,9 @@ angular.module('app')
 					},
 					post: function() {
 						return post;
+					},
+					messages: function() {
+						return null;
 					}
 				}
 			});
