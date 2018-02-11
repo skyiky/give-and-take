@@ -115,33 +115,20 @@ angular.module('app')
 				}
 
 				$http.get('/post/all').success(function(data) {
-					console.log(data);
+					if (data.state === 'success') {
+						Object.keys(data.data).forEach(function(username) {
+							Object.keys(data.data[username]).forEach(function(id) {
+								$scope.posts.push(data.data[username][id]);
+							});
+						});
+
+						$scope.loadMarkers();
+					}
 				});
 			}, function (err) {
 				// fail silently
 				console.log(err);
 			});
-
-			// load markers
-
-/*			$http.get('/user').success(function(data) {
-				$scope.user = data;
-
-				if (Object.keys($scope.user).length > 0) {
-					$scope.isLoggedIn = true;
-					$scope.imageUrl = 'http://graph.facebook.com/' + $scope.user.data.facebook.id + '/picture?type=square';
-				}
-
-				$http.get('/posts').success(function(data) {
-					$scope.posts = data.posts
-					$scope.loadMarkers();
-					$scope.notifsPosts = data.notifsPosts;
-				}, function(err) {
-					console.log(err);
-				});
-			}, function(err) {
-				console.log(err);
-			});*/
 		}
 
 		$scope.clearMarkers = function() {
@@ -159,21 +146,61 @@ angular.module('app')
 		}
 
 		function addMarker(post) {
-			$scope.markers[post.id] = new google.maps.Marker({
-				map: $scope.map,
-				position: new google.maps.LatLng(restaurant.coordinates.latitude, restaurant.coordinates.longitude),
-			});
+			var geocoder = new google.maps.Geocoder();
+			geocoder.geocode({ 'address': post.location}, function(results, status) {
+				if (status == google.maps.GeocoderStatus.OK) {
+					var fillColor = null;
+					var strokeColor = null;
+					var radius = post.serviceType.length * 0.8 * 500;
 
-			google.maps.event.addListener($scope.markers[post.id], 'click', function () {
-				$uibModal.open({
-					templateUrl: 'post.template.html',
-					controller: 'modalController',
-					resolve: {
-						user: function() {
-							return $scope.user;
+					if (post.serviceType.length > 1) {
+						fillColor = '#FFFF66';
+						strokeColor = '#FFCC66';
+					} else {
+						var serviceType = post.serviceType[0];
+
+						if (serviceType.value === 0) {
+							fillColor = '#FF9900';
+							strokeColor = 'FF6633';
+						} else if (serviceType.value === 1) {
+							fillColor = '#00CC66';
+							strokeColor = '#339933';
+						} else if (serviceType.value === 2) {
+							// fix blue
+							fillColor = '#3399FF';
+							strokeColor = '0066FF'
+						} else {
+							fillColor = '#CC99FF';
+							strokeColor = '#9966FF'
 						}
 					}
-				});
+
+					$scope.markers[post.id] = new google.maps.Circle({
+						map: $scope.map,
+						center: new google.maps.LatLng(results[0].geometry.location.lat(), results[0].geometry.location.lng()),
+						strokeColor: strokeColor,
+						strokeOpacity: 0.8,
+						strokeWeight: 2,
+						fillColor: fillColor,
+						fillOpacity: 0.5,
+						radius: radius
+					});
+
+					google.maps.event.addListener($scope.markers[post.id], 'click', function () {
+						$uibModal.open({
+							templateUrl: 'post.template.html',
+							controller: 'modalController',
+							resolve: {
+								user: function() {
+									return $scope.user;
+								},
+								post: function() {
+									return post;
+								}
+							}
+						});
+					});
+				}
 			});
 		}
 
@@ -184,6 +211,9 @@ angular.module('app')
 				resolve: {
 					user: function() {
 						return $scope.user;
+					},
+					post: function() {
+						return null;
 					}
 				}
 			});
@@ -204,12 +234,15 @@ angular.module('app')
 				resolve: {
 					user: function() {
 						return $scope.user;
+					},
+					post: function() {
+						return null;
 					}
 				}
 			});
 
 			addPostingModalInstance.result.then(function(posting) {
-				//add marker on map
+				addMarker(posting);
 			});
 		}
 
@@ -220,6 +253,9 @@ angular.module('app')
 				resolve: {
 					user: function() {
 						return $scope.user;
+					},
+					post: function() {
+						return null;
 					}
 				}
 			})

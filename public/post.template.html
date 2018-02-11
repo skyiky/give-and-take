@@ -1,0 +1,27 @@
+<div class="modal-content">
+	<div class="modal-header">
+		<h1>Posting</h1>
+	</div>
+	<div class="modal-body">
+		<div class="panel panel-danger" ng-show="showLoginError">
+			<div class="panel-heading">
+				<h4 class="panel-title">
+					<span>{{loginError}}</span>
+				</h4>
+			</div>
+		</div>
+		<i class="fa fa-spinner fa-spin" ng-show="didUserSubmit"></i>
+		<form ng-submit="submit()" ng-hide="didUserSubmit || showSuccess">
+			<label>Username</label>
+			<input type="username" class="form-control" placeholder="Username" 
+			ng-model="username" required>
+			<br/>
+			<label>Password</label>
+			<input type="password" class="form-control" placeholder="Password" ng-model="password" required>
+		</form>
+	</div>
+	<div class="modal-footer">
+		<input type="submit" value="Sign In" ng-click="signin()" class="btn btn-primary" style="width: 15%"/>
+		<input type="close" value="Close" ng-click="close()" class="btn btn-default" style="width:15%"/>
+	</div>
+</div>

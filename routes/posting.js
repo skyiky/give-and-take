@@ -29,7 +29,7 @@ router.get('/all', function(req, res) {
         return res.send({state: 'fail'});
     }
 
-    return res.send({state: "success"}, obj);
+    return res.send({state: "success", data: obj});
 });
 
 router.get('/:username', function(req, res, next) {
@@ -81,7 +81,7 @@ router.post('/add', function(req, res) {
         }
     })
 
-    return res.send({state: "success"});
+    return res.send({state: "success", id: idCounter});
 });
 
 

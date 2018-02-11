@@ -1,6 +1,6 @@
 angular.module('app')
-.controller('modalController', ['$scope', '$rootScope','$uibModal', '$uibModalInstance', '$http', 'user',
-	function($scope, $rootScope, $uibModal, $uibModalInstance, $http, user) {
+.controller('modalController', ['$scope', '$rootScope','$uibModal', '$uibModalInstance', '$http', 'user', 'post',
+	function($scope, $rootScope, $uibModal, $uibModalInstance, $http, user, post) {
 		$scope.didUserSubmit = false;
 		$scope.showLoginError = false;
 		$scope.showPostingError = false;
@@ -12,6 +12,7 @@ angular.module('app')
 		$scope.description = "";
 		$scope.selectedTypes = [];
 		$scope.user = user;
+		$scope.post = post;
 		$scope.types = [
 		{
 			name: 'Food',
@@ -91,6 +92,7 @@ angular.module('app')
 					$scope.didUserSubmit = false;
 					$scope.showPostingError = false;
 					$scope.postingError = "";
+					request.id = data.id;
 					$uibModalInstance.close(request);
 				} else {
 					$scope.didUserSubmit = false;
