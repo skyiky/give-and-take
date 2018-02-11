@@ -9,6 +9,8 @@ angular.module('app')
 		$scope.completeSetPosts = [];
 		$scope.search = "";
 		$scope.users = [];
+		$scope.userPosts = [];
+		$scope.elsePosts = [];
 		
 		function initPage() {
 			var mapOptions = {
@@ -123,6 +125,12 @@ angular.module('app')
 								var post = data.data[username][id];
 								post.username = username;
 								$scope.posts.push(post);
+
+								if ($scope.user && post.username.toLowerCase() == $scope.user.username.toLowerCase()) {
+									$scope.userPosts.push(post);
+								} else {
+									$scope.elsePosts.push(post);
+								}
 							});
 						});
 
@@ -292,32 +300,78 @@ angular.module('app')
 			});
 
 			addPostingModalInstance.result.then(function(posting) {
-				addMarker(posting);
-				$scope.posts.push(posting);
-				$scope.completeSetPosts.push(posting);
-			});
-		}
-
-		$scope.openEditPostingModal = function(post) {
-			var editPostingModalInstance = $uibModal.open({
-				templateUrl: 'post.edit.template.html',
-				controller: 'modalController',
-				resolve: {
-					user: function() {
-						return $scope.user;
-					},
-					post: function() {
-						return post;
-					}
+				if (posting) {
+					addMarker(posting);
+					$scope.posts.push(posting);
+					$scope.usersPosts.push(posting);
+					$scope.completeSetPosts.push(posting);
 				}
 			});
-
-			editPostingModalInstance.result.then(function(posting) {
-				addMarker(posting);
-			});
 		}
 
-		$scope.openModal = function() {
+		$scope.openEditPostingModal = function($event, post) {
+			$event.stopPropagation();
+			if (post.location.lat && post.location.lng) {
+				$http.get('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + post.location.lat + ',' + post.location.lng + '&sensor=false').success(function(data) {
+					var postalCode = "";
+
+					if (!data) {
+					//fail silently
+					return;
+				}
+
+				data.results.forEach(function(address) {
+					address.address_components.forEach(function(component) {
+						if (component.types.includes("postal_code") && postalCode.length < 1) {
+							postalCode = component.long_name.trim();
+						}
+					});
+				});
+
+				post.location = postalCode;
+
+				var editPostingModalInstance = $uibModal.open({
+					templateUrl: 'post.edit.template.html',
+					controller: 'modalController',
+					resolve: {
+						user: function() {
+							return $scope.user;
+						},
+						post: function() {
+							return post;
+						}
+					}
+				});
+
+				editPostingModalInstance.result.then(function(posting) {
+					if (posting) {
+						addMarker(posting);
+					}
+				});
+				});
+			} else {
+				var editPostingModalInstance = $uibModal.open({
+					templateUrl: 'post.edit.template.html',
+					controller: 'modalController',
+					resolve: {
+						user: function() {
+							return $scope.user;
+						},
+						post: function() {
+							return post;
+						}
+					}
+				});
+
+				editPostingModalInstance.result.then(function(posting) {
+					if (posting) {
+						addMarker(posting);
+					}
+				});
+			}
+		}
+
+		$scope.openModal = function(post) {
 			$uibModal.open({
 				templateUrl: 'post.template.html',
 				controller: 'modalController',
@@ -326,7 +380,7 @@ angular.module('app')
 						return $scope.user;
 					},
 					post: function() {
-						return null;
+						return post;
 					}
 				}
 			})
