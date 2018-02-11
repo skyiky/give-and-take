@@ -199,3 +199,8 @@ textarea {
 	margin-top: -10%;
 	margin-right: 2%;
 }
+
+.mail {
+	border: #00B7FF 1px solid;
+	padding: 5 5 5 5;
+}

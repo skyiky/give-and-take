@@ -19,29 +19,29 @@ router.post('/send', function(req, res) {
 
     var currentDate = new Date();
 
-	var message = {
-		id: Guid.create().value,
-		toUser: req.body.toUser,
-		fromUser: req.body.fromUser,
-		timestamp: currentDate.toLocaleString(),
-		subject: req.body.subject,
-		content: req.body.content
-	};
+    var message = {
+    	id: Guid.create().value,
+    	toUser: req.body.toUser,
+    	fromUser: req.body.fromUser,
+    	timestamp: currentDate.toLocaleString(),
+    	subject: req.body.subject,
+    	content: req.body.content
+    };
 
-	if (!messages) {
-		messages = {};
-	}
+    if (!messages) {
+    	messages = {};
+    }
 
-	messages[message.id] = message;
+    messages[message.id] = message;
 
-	var content = JSON.stringify(messages)
+    var content = JSON.stringify(messages)
 
     fs.writeFile("./routes/messages.json", content, 'utf8', function (err) {
-        if (err) {
-            return res.send({state: 'fail', error: 'An error occured, please try again.'});
-        } else {
-        	return res.send({state: 'success', message: message});
-        }
+    	if (err) {
+    		return res.send({state: 'fail', error: 'An error occured, please try again.'});
+    	} else {
+    		return res.send({state: 'success', message: message});
+    	}
     })
 });
 
@@ -49,23 +49,47 @@ router.get('/:username', function(req, res) {
 	try {
 		var messages = JSON.parse(fs.readFileSync('./routes/messages.json', 'utf8'));
 	} catch(e) {
+	}
+
+	var userMessages = [];
+	var username = req.params.username;
+
+	Object.keys(messages).forEach(function(key) {
+		var message = messages[key];
+
+		if (message.toUser.toLowerCase() === username.toLowerCase()) {
+			userMessages.push(message);
+		} else if (message.fromUser.toLowerCase() === username.toLowerCase()) {
+			message.subject = 'SENT: ' + message.subject;
+			userMessages.push(message);
+		}
+	});
+
+	return res.send({state:'success', messages: userMessages.reverse()});
+})
+
+router.delete('/:id', function(req, res) {
+	try {
+		var messages = JSON.parse(fs.readFileSync('./routes/messages.json', 'utf8'));
+	} catch(e) {
+    	// fail silently as no messages exist yet
     }
 
-    var userMessages = [];
-    var username = req.params.username;
+    if (!messages) {
+    	return res.state({state: 'fail', error: 'no messages exist'});
+    }
 
-    Object.keys(messages).forEach(function(key) {
-    	var message = messages[key];
+    if (messages[req.params.id]) {
+    	delete messages[req.params.id];
+    	var content = JSON.stringify(messages);
+    	fs.writeFile("./routes/messages.json", content, 'utf8', function (err) {
+    		if (err) {
+    			return res.state({state: 'fail', 'failed to delete message'});
+    		}
 
-    	if (message.toUser.toLowerCase() === username.toLowerCase()) {
-    		userMessages.push(message);
-    	} else if (message.fromUser.toLowerCase() === username.toLowerCase()) {
-    		message.subject = 'SENT: ' + message.subject;
-    		userMessages.push(message);
-    	}
-    });
-
-    return res.send({state:'success', messages: userMessages.reverse()});
+    		return res.state({state: 'success'});
+    	})
+    }
 })
 
 module.exports = router;
