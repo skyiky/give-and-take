@@ -6,7 +6,7 @@ Hack for Humanity 2018 Hackathon Project
 
 Essentialy, Give & Take is a website built with the purpose of giving people in need a way to request basic needs and supplies from other people. 
 
-People can view services and resources that people are offering through our Google Maps API. If people wish to donate/offer supplies, They must sign up and create an account. Once they create their account they will be allowed to make as many offer postings as they want. These postings will then be viewable by all other users of the website. If someone wishes to request supplies, they will be able to message the posting creator directly through the in-app messaging functionality.
+People can view services and resources (Ranging from FOOD, SHELTER, CLOTHING, MISC) that people are offering through our Google Maps API. If people wish to donate/offer supplies, They must sign up and create an account. Once they create their account they will be allowed to make as many offer postings as they want. These postings will then be viewable by all other users of the website. If someone wishes to request supplies, they will be able to message the posting creator directly through the in-app messaging functionality.
 
 # What problem does it solve?
 
@@ -18,7 +18,9 @@ Give & Take is a web application developed with Node.js, Express, Google Maps AP
 
 # What was the most difficult part?
 
-The most difficult parts were integrating our site with Google Maps API and creating our Front-end interfaces
+UX and CSS were challenging.
+Masking exact provider address/location with anonymized circles.
+Getting in-chat messaging service to work.
 
 # What are the next steps?
 
