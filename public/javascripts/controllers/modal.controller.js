@@ -146,8 +146,6 @@ angular.module('app')
 							$scope.didUserSubmit = false;
 							$scope.showPostingError = false;
 							$scope.postingError = "";
-							request.id = data.id;
-							request.username = $scope.user.username;
 							$uibModalInstance.close(request);
 						} else {
 							$scope.didUserSubmit = false;

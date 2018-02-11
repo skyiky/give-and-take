@@ -11,6 +11,10 @@ angular.module('app')
 		$scope.users = [];
 		$scope.userPosts = [];
 		$scope.elsePosts = [];
+		$scope.foodFilter = true;
+		$scope.shelterFilter = true;
+		$scope.clothesFilter = true;
+		$scope.miscFilter = true;
 		
 		function initPage() {
 			var mapOptions = {
@@ -124,8 +128,10 @@ angular.module('app')
 							Object.keys(data.data[username]).forEach(function(id) {
 								var post = data.data[username][id];
 								post.username = username;
-								$scope.posts.push(post);
+								post.id = parseInt(id);
 
+								$scope.posts.push(post);
+								console.log(post);
 								if ($scope.user && post.username.toLowerCase() == $scope.user.username.toLowerCase()) {
 									$scope.userPosts.push(post);
 								} else {
@@ -159,9 +165,66 @@ angular.module('app')
 		$scope.loadMarkers = function() {
 			$scope.clearMarkers();
 
+			var categories = [];
+
+			if ($scope.foodFilter) {
+				categories.push(0);
+			}
+
+			if ($scope.shelterFilter) {
+				categories.push(1);
+			}
+
+			if ($scope.clothesFilter) {
+				categories.push(2);
+			}
+
+			if ($scope.miscFilter) {
+				categories.push(3);
+			}
+
+			$scope.posts = [];
+			$scope.userPosts = [];
+			$scope.elsePosts = [];
+			
+			$scope.completeSetPosts.forEach(function(post) {
+				post.serviceType.forEach(function(type) {
+					if (categories.includes(type.value)) {
+						$scope.posts.push(post);
+					}
+				});
+			});
+
 			for (var i = 0; i < $scope.posts.length; i++) {
+				var post = $scope.posts[i];
+
+				if ($scope.user && post.username.toLowerCase() == $scope.user.username.toLowerCase()) {
+					$scope.userPosts.push(post);
+				} else {
+					$scope.elsePosts.push(post);
+				}
 				addMarker($scope.posts[i]);
 			}
+		}
+
+		$scope.toggleFoodFilter = function() {
+			$scope.foodFilter = !$scope.foodFilter;
+			$scope.loadMarkers();
+		}
+
+		$scope.toggleShelterFilter = function() {
+			$scope.shelterFilter = !$scope.shelterFilter;
+			$scope.loadMarkers();
+		}
+
+		$scope.toggleClothesFilter = function() {
+			$scope.clothesFilter = !$scope.clothesFilter;
+			$scope.loadMarkers();
+		}
+
+		$scope.toggleMiscFilter = function() {
+			$scope.miscFilter = !$scope.miscFilter;
+			$scope.loadMarkers();
 		}
 
 		function addMarker(post) {
@@ -345,10 +408,14 @@ angular.module('app')
 
 				editPostingModalInstance.result.then(function(posting) {
 					if (posting) {
-						addMarker(posting);
+						var postIndex = $scope.posts.findIndex(p => p.id === posting.id);
+						var userPostIndex = $scope.userPosts.findIndex(p => p.id === posting.id);
+
+						$scope.posts[postIndex] = posting;
+						$scope.userPosts[userPostIndex] = posting;
 					}
 				});
-				});
+			});
 			} else {
 				var editPostingModalInstance = $uibModal.open({
 					templateUrl: 'post.edit.template.html',
