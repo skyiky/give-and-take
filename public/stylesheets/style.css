@@ -79,7 +79,7 @@ p {
 }
 
 .sidebar-section {
-	height: 22%;
+	height: 27%;
 	padding: 0 0 0 0;
 	margin: 0 0 0 0;
 	overflow-y: scroll;
@@ -176,7 +176,7 @@ textarea {
 
 .row-field {
 	display: flex;
-  flex-direction: row;
+  	flex-direction: row;
 }
 
 .btn-default1 {
