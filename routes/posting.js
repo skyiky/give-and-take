@@ -64,12 +64,13 @@ router.post('/add', function(req, res) {
         req.body.serviceType.length < 1) {
         return res.send({state: 'fail'});
     } else {
+        idCounter++;
         donorData.serviceType = req.body.serviceType;
         donorData.serviceContent = req.body.serviceContent;
         donorData.location = req.body.location;
         donorData.title = req.body.title;
+        donorData.id = idCounter;
     }
-    idCounter++;
 
     // if no data exists
     if (!currentData) {

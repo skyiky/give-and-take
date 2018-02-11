@@ -6,6 +6,7 @@ angular.module('app')
 		$scope.markers = {};
 		$scope.coords = {};
 		$scope.posts = [];
+		$scope.completeSetPosts = [];
 		$scope.search = "";
 		$scope.users = [];
 		
@@ -125,6 +126,7 @@ angular.module('app')
 							});
 						});
 
+						$scope.completeSetPosts = $scope.posts;
 						$scope.loadMarkers();
 					}
 
@@ -155,64 +157,79 @@ angular.module('app')
 		}
 
 		function addMarker(post) {
-			var geocoder = new google.maps.Geocoder();
-			geocoder.geocode({ 'address': post.location}, function(results, status) {
-				if (status == google.maps.GeocoderStatus.OK) {
-					var fillColor = null;
-					var strokeColor = null;
-					var radius = post.serviceType.length * 0.8 * 500;
+			var fillColor = null;
+			var strokeColor = null;
+			var radius = post.serviceType.length * 0.8 * 500;
 
-					if (post.serviceType.length > 1) {
-						fillColor = '#FFFF66';
-						strokeColor = '#FFCC66';
-					} else {
-						var serviceType = post.serviceType[0];
+			if (post.serviceType.length > 1) {
+				fillColor = '#FFFF66';
+				strokeColor = '#FFCC66';
+			} else {
+				var serviceType = post.serviceType[0];
 
-						if (serviceType.value === 0) {
-							fillColor = '#FF9900';
-							strokeColor = 'FF6633';
-						} else if (serviceType.value === 1) {
-							fillColor = '#00CC66';
-							strokeColor = '#339933';
-						} else if (serviceType.value === 2) {
-							// fix blue
-							fillColor = '#3399FF';
-							strokeColor = '#0066FF'
-						} else {
-							fillColor = '#CC99FF';
-							strokeColor = '#9966FF'
+				if (serviceType.value === 0) {
+					fillColor = '#FF9900';
+					strokeColor = 'FF6633';
+				} else if (serviceType.value === 1) {
+					fillColor = '#00CC66';
+					strokeColor = '#339933';
+				} else if (serviceType.value === 2) {
+					// fix blue
+					fillColor = '#3399FF';
+					strokeColor = '#0066FF'
+				} else {
+					fillColor = '#CC99FF';
+					strokeColor = '#9966FF'
+				}
+			}
+
+			$scope.markers[post.id] = new google.maps.Circle({
+				map: $scope.map,
+				center: new google.maps.LatLng(post.location.lat, post.location.lng),
+				strokeColor: strokeColor,
+				strokeOpacity: 0.8,
+				strokeWeight: 2,
+				fillColor: fillColor,
+				fillOpacity: 0.5,
+				radius: radius
+			});
+
+			google.maps.event.addListener($scope.markers[post.id], 'click', function () {
+				$uibModal.open({
+					templateUrl: 'post.template.html',
+					controller: 'modalController',
+					resolve: {
+						user: function() {
+							return $scope.user;
+						},
+						post: function() {
+							post.email = $scope.users[post.username].email;
+							return post;
 						}
 					}
-
-					$scope.markers[post.id] = new google.maps.Circle({
-						map: $scope.map,
-						center: new google.maps.LatLng(results[0].geometry.location.lat(), results[0].geometry.location.lng()),
-						strokeColor: strokeColor,
-						strokeOpacity: 0.8,
-						strokeWeight: 2,
-						fillColor: fillColor,
-						fillOpacity: 0.5,
-						radius: radius
-					});
-
-					google.maps.event.addListener($scope.markers[post.id], 'click', function () {
-						$uibModal.open({
-							templateUrl: 'post.template.html',
-							controller: 'modalController',
-							resolve: {
-								user: function() {
-									return $scope.user;
-								},
-								post: function() {
-									post.email = $scope.users[post.username].email;
-									return post;
-								}
-							}
-						});
-					});
-				}
+				});
 			});
 		}
+
+		$scope.$watch("search", function(newValue, oldValue) {
+			if (newValue !== oldValue) {
+				$scope.posts = $scope.searchCriteriaMatch($scope.completeSetPosts);
+				$scope.loadMarkers();
+			}
+		});
+
+		$scope.searchCriteriaMatch = function (items) {
+			if (!$scope.search || $scope.search.length < 1) {
+				return items;
+			}
+
+			$scope.search = $scope.search.toLowerCase();
+
+			items = items.filter(i => i.title.toLowerCase().includes($scope.search) ||
+				i.serviceContent.toLowerCase().includes($scope.search));
+
+			return items;
+		};
 
 		$scope.openSignInModal = function() {
 			var signInModalInstance = $uibModal.open({
@@ -276,6 +293,8 @@ angular.module('app')
 
 			addPostingModalInstance.result.then(function(posting) {
 				addMarker(posting);
+				$scope.posts.push(posting);
+				$scope.completeSetPosts.push(posting);
 			});
 		}
 
