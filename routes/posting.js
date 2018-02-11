@@ -16,12 +16,12 @@ router.delete('/delete/username/:username/id/:id', function(req, res) {
     if (obj[username][postId]) {
         delete obj[username][postId];
         var content = JSON.stringify(obj);
-            fs.writeFile("./routes/donors.json", content, 'utf8', function (err) {
-        if (err) {
-            return console.log(err);
-        }
-        res.send({state: "success", data: obj});
-    });
+        fs.writeFile("./routes/donors.json", content, 'utf8', function (err) {
+            if (err) {
+                return console.log(err);
+            }
+            res.send({state: "success", data: obj});
+        });
     } else {
         res.send({state: "failed"});
     }
@@ -67,14 +67,14 @@ router.post('/add', function(req, res) {
         !req.body.title || 
         req.body.serviceType.length < 1) {
         return res.send({state: 'fail'});
-    } else {
-        idCounter++;
-        donorData.serviceType = req.body.serviceType;
-        donorData.serviceContent = req.body.serviceContent;
-        donorData.location = req.body.location;
-        donorData.title = req.body.title;
-        donorData.id = idCounter;
-    }
+} else {
+    idCounter++;
+    donorData.serviceType = req.body.serviceType;
+    donorData.serviceContent = req.body.serviceContent;
+    donorData.location = req.body.location;
+    donorData.title = req.body.title;
+    donorData.id = idCounter;
+}
 
     // if no data exists
     if (!currentData) {
@@ -91,15 +91,15 @@ router.post('/add', function(req, res) {
         if (err) {
             return res.send({state: 'fail'});
         }
-    })
 
-    fs.writeFile("./routes/postIDCounter", idCounter, 'utf8', function (err) {
-        if (err) {
-            return res.send({state: 'fail'});
-        }
+        fs.writeFile("./routes/postIDCounter", idCounter, 'utf8', function (err) {
+            if (err) {
+                return res.send({state: 'fail'});
+                
+            }
+        })
+        return res.send({state: "success", id: idCounter});
     })
-
-    return res.send({state: "success", id: idCounter});
 });
 
 
@@ -122,26 +122,26 @@ router.post('/update', function(req, res) {
             !req.body.title ||
             req.body.serviceType.length < 1) {
             return res.send({state: 'fail'});
-        } else {
-            donorData.serviceType = req.body.serviceType;
-            donorData.serviceContent = req.body.serviceContent;
-            donorData.location = req.body.location;
-            donorData.title = req.body.title;
-        }
-        currentData[username][postId] = donorData;
-        var content = JSON.stringify(currentData);
     } else {
-        return res.send({state: "fail"});
+        donorData.serviceType = req.body.serviceType;
+        donorData.serviceContent = req.body.serviceContent;
+        donorData.location = req.body.location;
+        donorData.title = req.body.title;
     }
+    currentData[username][postId] = donorData;
+    var content = JSON.stringify(currentData);
+} else {
+    return res.send({state: "fail"});
+}
 
-    fs.writeFile("./routes/donors.json", content, 'utf8', function (err) {
-        if (err) {
-            return console.log(err);
-        }
-        console.log("The file was saved!");
-    })
+fs.writeFile("./routes/donors.json", content, 'utf8', function (err) {
+    if (err) {
+        return console.log(err);
+    }
+    console.log("The file was saved!");
+})
 
-    return res.send({state: "success"});
+return res.send({state: "success"});
 });
 
 module.exports = router;

@@ -141,6 +141,9 @@ angular.module('app')
 							});
 						});
 
+						console.log($scope.posts);
+						console.log($scope.userPosts);
+
 						$scope.completeSetPosts = $scope.posts;
 						$scope.loadMarkers();
 					}
@@ -540,6 +543,7 @@ angular.module('app')
 		}
 
 		$scope.openModal = function(post) {
+			console.log('asdf');
 			$uibModal.open({
 				templateUrl: 'post.template.html',
 				controller: 'modalController',
