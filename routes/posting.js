@@ -105,6 +105,7 @@ router.post('/update', function(req, res) {
     } catch(e) {
         return res.send({state: 'fail'});
     }
+    
 
     var username = req.body.username;
     var postId = req.body.id;
@@ -116,7 +117,7 @@ router.post('/update', function(req, res) {
             !req.body.location ||
             !req.body.title ||
             req.body.serviceType.length < 1) {
-            return res.send({state: 'failed validation'});
+            return res.send({state: 'fail'});
         } else {
             donorData.serviceType = req.body.serviceType;
             donorData.serviceContent = req.body.serviceContent;
@@ -126,7 +127,7 @@ router.post('/update', function(req, res) {
         currentData[username][postId] = donorData;
         var content = JSON.stringify(currentData);
     } else {
-        return res.send({state: "failed postid nonexistent"});
+        return res.send({state: "fail"});
     }
 
     fs.writeFile("./routes/donors.json", content, 'utf8', function (err) {

@@ -32,8 +32,8 @@
 
 			<hr>
 			<h4> From you: </h4>
-			<div class="sidebar-section">
-				<div class="btn-sidebar-grp posting-bar" ng-repeat="post in posts">
+			<div class="btn-sidebar-grp posting-bar" ng-repeat="post in userPosts">
+				<div ng-click="openModal(post)">
 					<div class="post-title pull-left">
 						<div class="icon-list" ng-repeat="serviceType in post.serviceType">
 							<i class="fa fa-cutlery fa-1.5x contentIcon" ng-if="serviceType.value == 0"></i>
@@ -41,11 +41,12 @@
 							<i class="fa fa-black-tie fa-1.5x contentIcon" ng-if="serviceType.value == 2"></i>
 							<i class="fa fa-archive fa-1.5x contentIcon" ng-if="serviceType.value == 3"></i>
 						</div>
-						<b>{{post.title}}</b>
+						{{post.title}}
 					</div>
-					<div class="post-desc" ng-click="openPostingModal(post)"><!--{{post.serviceContent}}--></div>
+
+					<div class="post-desc">{{post.serviceContent}}</div>
 					<div class="modify-post-btn-grp pull-right">
-						<button class="btn"><i class="fa fa-wrench fa-1.5x" ng-click="openEditPostingModal(post)"></i></button>
+						<button class="btn"><i class="fa fa-wrench fa-1.5x" ng-click="openEditPostingModal($event, post)"></i></button>
 						<button class="btn"><i class="fa fa-trash fa-1.5x" ></i></button>
 					</div>
 				</div>
@@ -53,8 +54,8 @@
 
 			<hr>
 			<h4> From everyone: </h4>
-			<div class="sidebar-section">
-				<div class="btn-sidebar-grp posting-bar" ng-repeat="post in completeSetPosts">
+			<div class="btn-sidebar-grp posting-bar" ng-repeat="post in elsePosts">
+				<div ng-click="openModal(post)">
 					<div class="post-title pull-left">
 						<div class="icon-list" ng-repeat="serviceType in post.serviceType">
 							<i class="fa fa-cutlery fa-1.5x contentIcon" ng-if="serviceType.value == 0"></i>
@@ -62,11 +63,11 @@
 							<i class="fa fa-black-tie fa-1.5x contentIcon" ng-if="serviceType.value == 2"></i>
 							<i class="fa fa-archive fa-1.5x contentIcon" ng-if="serviceType.value == 3"></i>
 						</div>
-						<b>{{post.title}}</b>
+						{{post.title}}
 					</div>
-					<div class="post-desc" ng-click="openPostingModal(post)"><!--{{post.serviceContent}}--></div>
+					<div class="post-desc">{{post.serviceContent}}</div>
 					<div class="modify-post-btn-grp pull-right">
-						<button class="btn"><i class="fa fa-wrench fa-1.5x" ng-click="openEditPostingModal()"></i></button>
+						<button class="btn"><i class="fa fa-wrench fa-1.5x" ng-click="openEditPostingModal($event, post)"></i></button>
 						<button class="btn"><i class="fa fa-trash fa-1.5x"></i></button>
 					</div>
 				</div>
@@ -85,3 +86,4 @@
 				</div>
 			</div>
 		</div>
+	</div>

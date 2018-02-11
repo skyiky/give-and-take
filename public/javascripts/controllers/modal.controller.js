@@ -51,7 +51,20 @@ angular.module('app')
 		if ($scope.post) {
 			$scope.title = $scope.post.title;
 			$scope.description = $scope.post.serviceContent;
-			$scope.selectedTypes = $scope.post.serviceType;
+			var categoryTypes = [];
+
+			if ($scope.post.serviceType && $scope.post.serviceType.length > 0) {
+				$scope.post.serviceType.forEach(function(category) {
+					categoryTypes.push(category.value);
+				});
+
+				$scope.types.forEach(function(type) {
+					if (categoryTypes.includes(type.value)) {
+						type.ticked = true;
+					}
+				});
+			}
+
 			$scope.location = $scope.post.location;
 		}
 
@@ -100,6 +113,54 @@ angular.module('app')
 				$scope.signupError = "An error occured, please try again."
 			})
 		}
+
+		$scope.update = function() {
+			$scope.didUserSubmit = true;
+			$scope.showPostingError = false;
+			$scope.postingError = "";
+
+			console.log($scope.post);
+
+			var request = {
+				username: $scope.post.username,
+				id: $scope.post.id,
+				serviceType: $scope.selectedTypes,
+				serviceContent: $scope.description,
+				title: $scope.title
+			};
+
+			var geocoder = new google.maps.Geocoder();
+			geocoder.geocode({ 'address': $scope.location}, function(results, status) {
+				if (status == google.maps.GeocoderStatus.OK) {
+					request.location = {
+						lat: results[0].geometry.location.lat(),
+						lng: results[0].geometry.location.lng()
+					};
+
+					$http.post('/post/update', request).success(function (data) {
+						if (data.state === 'fail') {
+							$scope.didUserSubmit = false;
+							$scope.showPostingError = true;
+							$scope.postingError = "An unknown error occured";
+						} else if (data.state === 'success') {
+							$scope.didUserSubmit = false;
+							$scope.showPostingError = false;
+							$scope.postingError = "";
+							$uibModalInstance.close(request);
+						} else {
+							$scope.didUserSubmit = false;
+							$scope.showPostingError = true;
+							$scope.postingError = "An unknown error occured";
+						}
+					}, function(err) {
+						$scope.didUserSubmit = false;
+						$scope.showPostingError = true;
+						$scope.postingError = "An unknown error occured";
+					});
+				}
+			});
+		}
+		
 
 		$scope.signin = function() {
 			$scope.didUserSubmit = true;
