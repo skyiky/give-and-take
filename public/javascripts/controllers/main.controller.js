@@ -7,6 +7,7 @@ angular.module('app')
 		$scope.coords = {};
 		$scope.posts = [];
 		$scope.search = "";
+		$scope.users = [];
 		
 		function initPage() {
 			var mapOptions = {
@@ -118,12 +119,20 @@ angular.module('app')
 					if (data.state === 'success') {
 						Object.keys(data.data).forEach(function(username) {
 							Object.keys(data.data[username]).forEach(function(id) {
-								$scope.posts.push(data.data[username][id]);
+								var post = data.data[username][id];
+								post.username = username;
+								$scope.posts.push(post);
 							});
 						});
 
 						$scope.loadMarkers();
 					}
+
+					$http.get('/auth/users').success(function(data) {
+						if (data.state === 'success') {
+							$scope.users = data.users;
+						}
+					});
 				});
 			}, function (err) {
 				// fail silently
@@ -195,6 +204,7 @@ angular.module('app')
 									return $scope.user;
 								},
 								post: function() {
+									post.email = $scope.users[post.username].email;
 									return post;
 								}
 							}

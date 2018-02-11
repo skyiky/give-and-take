@@ -2,7 +2,7 @@
 	<div class="col-xs-3 view">
 		<h1>Give & Take</h1>
 		<br/>
-		<h3 ng-if="isLoggedIn" class="btn-sidebar-grp">{{user.name}}</h3>
+		<h3 ng-if="isLoggedIn" class="btn-sidebar-grp">Hello {{user.name}}</h3>
 		<div ng-if="!isLoggedIn" class="btn-group btn-sidebar-grp">
 			<button class="btn btn-primary" ng-click="openSignUpModal()">Sign Up</button>
 			<button class="btn btn-primary" ng-click="openSignInModal()">Log In</button>

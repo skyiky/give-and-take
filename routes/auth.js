@@ -52,6 +52,10 @@ router.post('/login', function(req, res, next) {
     return res.send({state: 'success', user: user});
 });
 
+router.get('/users', function(req, res, next) {
+	return res.send({state: 'success', users: users});
+});
+
 router.get('/user/:username', function(req, res, next) {
 	if (!req.params.username) {
 		return res.send({state: 'fail'});

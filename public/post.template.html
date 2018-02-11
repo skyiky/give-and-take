@@ -1,6 +1,6 @@
 <div class="modal-content">
 	<div class="modal-header">
-		<h1>Posting</h1>
+		<h1>{{post.title}}</h1>
 		<div class="categories">
 			<div ng-repeat="serviceType in post.serviceType" style="display: inline-block;">
 				<span class='label'>{{serviceType.name}}</span> &nbsp;
@@ -8,7 +8,9 @@
 		</div>
 	</div>
 	<div class="modal-body">
-		
+	<label>Description: </label> {{post.serviceContent}}
+	<br/>
+	<label>Contact Info: </label> {{post.email}}
 	</div>
 	<div class="modal-footer">
 		<input type="close" value="Close" ng-click="close()" class="btn btn-default" style="width:15%"/>
