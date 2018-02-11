@@ -16,7 +16,7 @@ angular.module('app')
 		$scope.shelterFilter = true;
 		$scope.clothesFilter = true;
 		$scope.miscFilter = true;
-		
+
 		function initPage() {
 			var mapOptions = {
 				zoom: 14,
@@ -195,7 +195,7 @@ angular.module('app')
 			$scope.posts = [];
 			$scope.userPosts = [];
 			$scope.elsePosts = [];
-			
+
 			$scope.completeSetPosts.forEach(function(post) {
 				post.serviceType.forEach(function(type) {
 					if (categories.includes(type.value)) {
@@ -247,17 +247,16 @@ angular.module('app')
 			} else {
 				var serviceType = post.serviceType[0];
 
-				if (serviceType.value === 0) {
+				if (serviceType.value === 0) { // food
 					fillColor = '#FF9900';
 					strokeColor = 'FF6633';
-				} else if (serviceType.value === 1) {
+				} else if (serviceType.value === 1) { // housing
 					fillColor = '#00CC66';
 					strokeColor = '#339933';
-				} else if (serviceType.value === 2) {
-					// fix blue
+				} else if (serviceType.value === 2) { // clothing
 					fillColor = '#3399FF';
 					strokeColor = '#0066FF'
-				} else {
+				} else { // miscellaneous
 					fillColor = '#CC99FF';
 					strokeColor = '#9966FF'
 				}
