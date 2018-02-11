@@ -237,6 +237,29 @@ angular.module('app')
 			});
 		}
 
+		$scope.openSignUpModal = function() {
+			var signUpModalInstance = $uibModal.open({
+				templateUrl: 'signup.template.html',
+				controller: 'modalController',
+				resolve: {
+					user: function() {
+						return $scope.user;
+					},
+					post: function() {
+						return null;
+					}
+				}
+			});
+
+			signUpModalInstance.result.then(function(user) {
+				if (user) {
+					$scope.user = user;
+					$scope.isLoggedIn = true;
+					$window.sessionStorage.setItem("user", user.username);
+				}
+			});
+		}
+
 		$scope.openAddPostingModal = function() {
 			var addPostingModalInstance = $uibModal.open({
 				templateUrl: 'post.add.template.html',
