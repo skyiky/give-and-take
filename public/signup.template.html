@@ -13,66 +13,63 @@
 		<i class="fa fa-spinner fa-spin" ng-show="didUserSubmit"></i>
 		<form ng-submit="submit()" ng-hide="didUserSubmit || showSuccess">
 
-			<label>Username</label>
+			<label>Please enter a username:</label>
 			<input type="username" class="form-control" placeholder="Username"
 			ng-model="username" required>
 
 			<br/>
 
-			<label>Email Address</label>
+			<label>Please enter your email address:</label>
 			<input type="email" class="form-control" placeholder="Email Address"
 			ng-model="email" required>
 
 			<br/>
 
-			<label>First Name</label>
-			<input type="firstname" class="form-control" placeholder="First name"
-			ng-model="firstname" required>
-
-			&nbsp;
-
-			<label>Surname</label>
-			<input type="surname" class="form-control" placeholder="Surname"
-			ng-model="surname" required>
-
-			<br/>
-
-			<input type="radio" name="gender" value="male" checked> Male <br>
-			<input type="radio" name="gender" value="female"> Female <br>
-			<input type="radio" name="gender" value="other"> Other <br>
+			<label>What is your name?</label>
+			<div class="row-field">
+				<input type="firstname" class="form-control" placeholder="First name"
+				ng-model="firstname" required>
+				&nbsp; <!--This is a space-->
+				<input type="surname" class="form-control" placeholder="Surname"
+				ng-model="surname" required>
+			</div>
 
 			<br/>
 
-			<label>Street Address</label>
+			<label>Gender:</label><br/>
+			<input type="radio" name="gender" value="male" checked> Male &nbsp;
+			<input type="radio" name="gender" value="female"> Female &nbsp;
+			<input type="radio" name="gender" value="other"> Other &nbsp;
+
+			<br/>
+			<br/>
+
+			<label>Where do you live?</label>
 			<input type="address" class="form-control" placeholder="Street Address"
 			ng-model="address" required>
+			<br/>
+			<div class="row-field">
+				<input type="city" class="form-control" placeholder="City"
+				ng-model="city" required>
+				&nbsp; <!--This is a space-->
+				<input type="state" class="form-control" placeholder="State/Province"
+				ng-model="state" required>
+				&nbsp; <!--This is a space-->
+				<input type="country" class="form-control" placeholder="Country"
+				ng-model="country" required>
+				&nbsp; <!--This is a space-->
+				<input type="postalCode" class="form-control" placeholder="Postal Code"
+				ng-model="postalCode" required>
+			</div>
 
 			<br/>
 
-			<label>City</label>
-			<input type="city" class="form-control" placeholder="City"
-			ng-model="city" required>
-
-			&nbsp;
-
-			<label>Country</label>
-			<input type="country" class="form-control" placeholder="Country"
-			ng-model="country" required>
-
-			&nbsp;
-
-			<label>Postal Code</label>
-			<input type="postalCode" class="form-control" placeholder="Postal Code"
-			ng-model="postalCode" required>
-			<br/>
-
-			<label>Password</label>
+			<label>Please enter a password:</label>
 			<input type="password" class="form-control" placeholder="Password" ng-model="password" required>
 
 			<br/>
 
-			<label>Re-enter Password</label>
-			<input type="password" class="form-control" placeholder="Password" ng-model="passwordConfirm" required>
+			<input type="password" class="form-control" placeholder="Re-enter Password" ng-model="passwordConfirm" required>
 
 		</form>
 	</div>
