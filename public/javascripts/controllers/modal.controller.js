@@ -211,8 +211,7 @@ angular.module('app')
 				username: $scope.post.username,
 				id: $scope.post.id
 			};
-			console.log(request);
-			$http.delete('post/delete', request).success(function (data) {
+			$http.delete('/post/delete/username/' + request.username + '/id/' + request.id).success(function (data) {
 				if (data.state === 'fail') {
 					$scope.didUserSubmit = false;
 					$scope.showPostingError = true;

@@ -11,6 +11,8 @@
 				Send Message
 			</button>
 		</div>
+		<br/>
+		<br/>
 		<div class="panel panel-danger" ng-show="showMessagingError">
 			<div class="panel-heading">
 				<h4 class="panel-title">
@@ -20,11 +22,21 @@
 		</div>
 		<i class="fa fa-spinner fa-spin" ng-show="didUserSubmit"></i>
 		<div ng-repeat="message in messages" ng-show="inboxView" ng-hide="didUserSubmit || sendView">
-			<div ng-click="openMessage(message)">
-				<div class="post-title pull-left">
-					{{message.Subject}}
+			<div style="height: 10%">
+				<div class="pull-left">
+					<button class="btn btn-danger" style="margin-top: 18%" ng-click="deleteMessage(message.id)">
+						<i class="fa fa-minus"></i>
+					</button>
 				</div>
-				<div class="post-desc">From {{message.fromUser}}</div>
+				<div class="mail pull-right" ng-click="openMessage(message)" style="width: 90%">
+					<div class="pull-left">
+						{{message.subject}}
+					</div>
+					<div class="pull-right">
+						{{message.timestamp}}
+					</div>
+					<div class="post-desc">From {{message.fromUser}}</div>
+				</div>
 			</div>
 		</div>
 		<form ng-submit="submit()" ng-hide="didUserSubmit || !messageView" ng-show="sendView">

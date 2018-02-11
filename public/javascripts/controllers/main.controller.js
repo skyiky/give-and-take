@@ -428,7 +428,11 @@ angular.module('app')
 			});
 
 			deletePostingModalInstance.result.then(function(posting) {
+				var postIndex = $scope.completeSetPosts.findIndex(p => p.id === posting.id);
 
+				delete $scope.completeSetPosts[postIndex];
+
+				$scope.loadMarkers();
 			});
 		}
 

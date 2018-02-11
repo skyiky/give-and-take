@@ -4,10 +4,15 @@ var fs = require('fs');
 var idCounter = fs.readFileSync('./routes/postIDCounter.txt', 'utf8');
 idCounter = parseInt(idCounter);
 
-router.delete('/delete', function(req, res) {
-    var username = req.body.username;
-    var postId = req.body.id
-    var obj = JSON.parse(fs.readFileSync('./routes/donors.json', 'utf8'));
+router.delete('/delete/username/:username/id/:id', function(req, res) {
+    var username = req.params.username;
+    var postId = req.params.id;
+
+    try {
+        var obj = JSON.parse(fs.readFileSync('./routes/donors.json', 'utf8'));
+    } catch(e) {
+        return res.send({state: 'fail'});
+    }
     if (obj[username][postId]) {
         delete obj[username][postId];
         var content = JSON.stringify(obj);
@@ -15,9 +20,8 @@ router.delete('/delete', function(req, res) {
         if (err) {
             return console.log(err);
         }
-        console.log("The file was saved!");
-    })
-    res.send({state: "success", data: obj});
+        res.send({state: "success", data: obj});
+    });
     } else {
         res.send({state: "failed"});
     }
