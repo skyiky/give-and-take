@@ -85,7 +85,7 @@ angular.module('app')
 				} else {
 					$scope.didUserSubmit = false;
 					$scope.showSignUpError = true;
-					$scope.signupError = 'An error occured, please try again.';
+					$scope.signupError = data.error;
 				}
 			}, function(err) {
 				$scope.didUserSubmit = false;

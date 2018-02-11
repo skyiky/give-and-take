@@ -13,6 +13,12 @@ router.post('/signup', function(req, res, next) {
     	users = {};
     }
 
+    var user = users[req.body.username];
+
+    if (user) {
+    	return res.send({state: 'fail', error: 'User already exists, please try again.'})
+    }
+
     users[req.body.username] = {
     	username : req.body.username,
     	email: req.body.email,
@@ -29,7 +35,7 @@ router.post('/signup', function(req, res, next) {
 
     fs.writeFile("./routes/users.json", content, 'utf8', function (err) {
         if (err) {
-            return res.send({state: 'fail'});
+            return res.send({state: 'fail', error: 'An error occured, please try again.'});
         } else {
         	return res.send({state: 'success', user: users[req.body.username]});
         }
