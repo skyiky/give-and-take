@@ -11,11 +11,12 @@ angular.module('app')
 		$scope.users = [];
 		$scope.userPosts = [];
 		$scope.elsePosts = [];
+		$scope.messages = [];
 		$scope.foodFilter = true;
 		$scope.shelterFilter = true;
 		$scope.clothesFilter = true;
 		$scope.miscFilter = true;
-		
+
 		function initPage() {
 			var mapOptions = {
 				zoom: 14,
@@ -148,6 +149,14 @@ angular.module('app')
 						if (data.state === 'success') {
 							$scope.users = data.users;
 						}
+
+						if ($scope.user) {
+							$http.get('/message/' + $scope.user.username).success(function(data) {
+								if (data.state === 'success') {
+									$scope.messages = data.messages;
+								}
+							});
+						}
 					});
 				});
 			}, function (err) {
@@ -186,7 +195,7 @@ angular.module('app')
 			$scope.posts = [];
 			$scope.userPosts = [];
 			$scope.elsePosts = [];
-			
+
 			$scope.completeSetPosts.forEach(function(post) {
 				post.serviceType.forEach(function(type) {
 					if (categories.includes(type.value)) {
@@ -238,17 +247,16 @@ angular.module('app')
 			} else {
 				var serviceType = post.serviceType[0];
 
-				if (serviceType.value === 0) {
+				if (serviceType.value === 0) { // food
 					fillColor = '#FF9900';
 					strokeColor = 'FF6633';
-				} else if (serviceType.value === 1) {
+				} else if (serviceType.value === 1) { // housing
 					fillColor = '#00CC66';
 					strokeColor = '#339933';
-				} else if (serviceType.value === 2) {
-					// fix blue
+				} else if (serviceType.value === 2) { // clothing
 					fillColor = '#3399FF';
 					strokeColor = '#0066FF'
-				} else {
+				} else { // miscellaneous
 					fillColor = '#CC99FF';
 					strokeColor = '#9966FF'
 				}
@@ -276,6 +284,9 @@ angular.module('app')
 						post: function() {
 							post.email = $scope.users[post.username].email;
 							return post;
+						},
+						messages: function() {
+							return null;
 						}
 					}
 				});
@@ -312,6 +323,9 @@ angular.module('app')
 					},
 					post: function() {
 						return null;
+					},
+					messages: function() {
+						return null;
 					}
 				}
 			});
@@ -325,6 +339,24 @@ angular.module('app')
 			});
 		}
 
+		$scope.openMessageModal = function() {
+			var messageModalInstance = $uibModal.open({
+				templateUrl: 'message.template.html',
+				controller: 'modalController',
+				resolve: {
+					user: function() {
+						return $scope.user;
+					},
+					post: function() {
+						return null;
+					},
+					messages: function() {
+						return $scope.messages;
+					}
+				}
+			})
+		}
+
 		$scope.openSignUpModal = function() {
 			var signUpModalInstance = $uibModal.open({
 				templateUrl: 'signup.template.html',
@@ -335,7 +367,11 @@ angular.module('app')
 					},
 					post: function() {
 						return null;
+					},
+					messages: function() {
+						return null;
 					}
+
 				}
 			});
 
@@ -358,7 +394,11 @@ angular.module('app')
 					},
 					post: function() {
 						return null;
+					},
+					messages: function() {
+						return null;
 					}
+
 				}
 			});
 
@@ -426,7 +466,11 @@ angular.module('app')
 						},
 						post: function() {
 							return post;
+						},
+						messages: function() {
+							return null;
 						}
+
 					}
 				});
 
@@ -450,7 +494,11 @@ angular.module('app')
 						},
 						post: function() {
 							return post;
+						},
+						messages: function() {
+							return null;
 						}
+
 					}
 				});
 
@@ -472,7 +520,11 @@ angular.module('app')
 					},
 					post: function() {
 						return post;
+					},
+					messages: function() {
+						return null;
 					}
+
 				}
 			})
 		}

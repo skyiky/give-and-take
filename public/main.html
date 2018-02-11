@@ -1,6 +1,9 @@
 <div class="view" ng-controller="mainController">
 	<div class="col-xs-3 view">
 		<h1>Give & Take</h1>
+		<button class="btn btn-default1 pull-right message" ng-click="openMessageModal()">
+			<i class="fa fa-envelope-o fa-2x"></i>
+		</button>
 		<br/>
 		<h3 ng-if="isLoggedIn" class="btn-sidebar-grp">Hello, {{user.name}}</h3>
 		<div ng-if="!isLoggedIn" class="btn-group btn-sidebar-grp">
@@ -30,49 +33,54 @@
 				<i class="fa fa-plus"></i>   Submit a posting</button>
 			</div>
 
-			<hr>
-			<h4>Your postings: </h4>
-			<div class="btn-sidebar-grp posting-bar" ng-repeat="post in userPosts">
-				<div ng-click="openModal(post)">
-					<div class="post-title pull-left">
-						<div class="icon-list" ng-repeat="serviceType in post.serviceType">
-							<i class="fa fa-cutlery fa-1.5x contentIcon" ng-if="serviceType.value == 0"></i>
-							<i class="fa fa-home fa-1.5x contentIcon" ng-if="serviceType.value == 1"></i>
-							<i class="fa fa-black-tie fa-1.5x contentIcon" ng-if="serviceType.value == 2"></i>
-							<i class="fa fa-archive fa-1.5x contentIcon" ng-if="serviceType.value == 3"></i>
-						</div>
-						{{post.title}}
-					</div>
+			<div ng-if="isLoggedIn">
+				<hr>
+				<h4> Your postings: </h4>
+				<div class="sidebar-section">
+					<div class="btn-sidebar-grp posting-bar" ng-repeat="post in userPosts">
+						<div ng-click="openModal(post)">
+							<div class="post-title pull-left">
+								<div class="icon-list" ng-repeat="serviceType in post.serviceType">
+									<i class="fa fa-cutlery fa-1.5x contentIcon" ng-if="serviceType.value == 0"></i>
+									<i class="fa fa-home fa-1.5x contentIcon" ng-if="serviceType.value == 1"></i>
+									<i class="fa fa-black-tie fa-1.5x contentIcon" ng-if="serviceType.value == 2"></i>
+									<i class="fa fa-archive fa-1.5x contentIcon" ng-if="serviceType.value == 3"></i>
+								</div>
+								<b>{{post.title}}</b>
+							</div>
 
-					<div class="post-desc">{{post.serviceContent}}</div>
-					<div class="modify-post-btn-grp pull-right">
-						<button class="btn"><i class="fa fa-wrench fa-1.5x" ng-click="openEditPostingModal($event, post)"></i></button>
-						<button class="btn"><i class="fa fa-trash fa-1.5x" ng-click="openDeletePostingModal($event, post)"></i></button>
+							<div class="post-desc"><!--{{post.serviceContent}}--></div>
+							<div class="modify-post-btn-grp pull-right">
+								<button class="btn"><i class="fa fa-wrench fa-1.5x" ng-click="openEditPostingModal($event, post)"></i></button>
+								<button class="btn"><i class="fa fa-trash fa-1.5x" ></i></button>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
 
 			<hr>
-			<h4>Postings near you: </h4>
-			<div class="btn-sidebar-grp posting-bar" ng-repeat="post in elsePosts">
-				<div ng-click="openModal(post)">
-					<div class="post-title pull-left">
-						<div class="icon-list" ng-repeat="serviceType in post.serviceType">
-							<i class="fa fa-cutlery fa-1.5x contentIcon" ng-if="serviceType.value == 0"></i>
-							<i class="fa fa-home fa-1.5x contentIcon" ng-if="serviceType.value == 1"></i>
-							<i class="fa fa-black-tie fa-1.5x contentIcon" ng-if="serviceType.value == 2"></i>
-							<i class="fa fa-archive fa-1.5x contentIcon" ng-if="serviceType.value == 3"></i>
+			<h4> Postings near you: </h4>
+			<div class="sidebar-section">
+				<div class="btn-sidebar-grp posting-bar" ng-repeat="post in elsePosts">
+					<div ng-click="openModal(post)">
+						<div class="post-title pull-left">
+							<div class="icon-list" ng-repeat="serviceType in post.serviceType">
+								<i class="fa fa-cutlery fa-1.5x contentIcon" ng-if="serviceType.value == 0"></i>
+								<i class="fa fa-home fa-1.5x contentIcon" ng-if="serviceType.value == 1"></i>
+								<i class="fa fa-black-tie fa-1.5x contentIcon" ng-if="serviceType.value == 2"></i>
+								<i class="fa fa-archive fa-1.5x contentIcon" ng-if="serviceType.value == 3"></i>
+							</div>
+							<b>{{post.title}}</b>
 						</div>
-						{{post.title}}
+						<div class="post-desc"><!--{{post.serviceContent}}--></div>
+						<div class="modify-post-btn-grp pull-right">
+							<button class="btn"><i class="fa fa-wrench fa-1.5x" ng-click="openEditPostingModal($event, post)"></i></button>
+							<button class="btn"><i class="fa fa-trash fa-1.5x"></i></button>
+						</div>
 					</div>
-					<div class="post-desc">{{post.serviceContent}}</div>
-					<div class="modify-post-btn-grp pull-right">
-						<button class="btn"><i class="fa fa-wrench fa-1.5x" ng-click="openEditPostingModal($event, post)"></i></button>
-						<button class="btn"><i class="fa fa-trash fa-1.5x" ng-click="openDeletePostingModal($event, post)"></i></button>
-					</div>	
 				</div>
 			</div>
-
 
 			<div ng-if="isLoggedIn" class="btn-sidebar-grp footer">
 				<button class="btn btn-danger" ng-click="logout()">

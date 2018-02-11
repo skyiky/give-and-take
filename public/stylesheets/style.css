@@ -5,8 +5,8 @@ body {
 	height: 100%;
 	width: 100%;
 	height: 100%;
-	font-family: sans-serif;
 	overflow-x: hidden;
+	font-family: Karla;
 }
 
 html {
@@ -76,10 +76,18 @@ p {
 .btn-sidebar-grp {
 	text-align: center;
 	left: 35%;
+	cursor:pointer;
+}
+
+.sidebar-section {
+	height: 27%;
+	padding: 0 0 0 0;
+	margin: 0 0 0 0;
+	overflow-y: scroll;
 }
 
 .btn-sidebar-grp-1 {
-	left: 34.2%;
+	left: 34.2%; /*how can we fix this so it's center of sidebar*/
 }
 
 .posting-bar {
@@ -149,7 +157,7 @@ p {
 }
 
 .footer {
-	margin-top: 720px;
+	margin-top: 10px;
 }
 
 textarea {
@@ -177,7 +185,7 @@ textarea {
 
 .row-field {
 	display: flex;
-  flex-direction: row;
+  	flex-direction: row;
 }
 
 .btn-default1 {
@@ -186,4 +194,14 @@ textarea {
 
 .btn-default1:hover {
 	background-color: #D4D4D4;
+}
+
+.message {
+	margin-top: -10%;
+	margin-right: 2%;
+}
+
+.mail {
+	border: #00B7FF 1px solid;
+	padding: 5 5 5 5;
 }
