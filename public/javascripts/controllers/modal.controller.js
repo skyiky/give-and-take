@@ -77,6 +77,14 @@ angular.module('app')
 			$scope.location = $scope.post.location;
 		}
 
+		$scope.openMessage = function(message) {
+			$scope.messageView = true;
+			$scope.inboxView = false;
+			$scope.sendView = false;
+
+			$scope.message = message;
+		}
+
 		$scope.openDeleteMessage = function(message) {
 			var deleteMessageModalInstance = $uibModal.open({
 				templateUrl: 'message.delete.template.html',
@@ -100,7 +108,7 @@ angular.module('app')
 			deleteMessageModalInstance.result.then(function(messageId) {
 				var messageIndex = $scope.messages.findIndex(m => m.id == messageId);
 
-				delete $scope.messages[messageIndex];
+				$scope.messages.splice(messageIndex, 1);
 			});
 		}
 
@@ -116,9 +124,11 @@ angular.module('app')
 			if (state === 'inbox') {
 				$scope.inboxView = true;
 				$scope.sendView = false;
+				$scope.messageView = false;
 			} else {
 				$scope.inboxView = false;
 				$scope.sendView = true;
+				$scope.messageView = false;
 			}
 		}
 
