@@ -1,0 +1,45 @@
+<div class="modal-content">
+	<div class="modal-header">
+		<h1>Inbox</h1>
+	</div>
+	<div class="modal-body">
+		<div class="btn-group btn-sidebar-grp-1">
+			<button class="btn btn-default1" ng-click="toggleView('inbox')">
+				Inbox
+			</button>
+			<button class="btn btn-default1" ng-click="toggleView('send')">
+				Send Message
+			</button>
+		</div>
+		<div class="panel panel-danger" ng-show="showMessagingError">
+			<div class="panel-heading">
+				<h4 class="panel-title">
+					<span>{{messagingError}}</span>
+				</h4>
+			</div>
+		</div>
+		<i class="fa fa-spinner fa-spin" ng-show="didUserSubmit"></i>
+		<div ng-repeat="message in messages" ng-show="inboxView" ng-hide="didUserSubmit || sendView">
+			<div ng-click="openMessage(message)">
+				<div class="post-title pull-left">
+					{{message.Subject}}
+				</div>
+				<div class="post-desc">From {{message.fromUser}}</div>
+			</div>
+		</div>
+		<form ng-submit="submit()" ng-hide="didUserSubmit || !messageView" ng-show="sendView">
+			<label>To</label>
+			<input type="to" class="form-control" placeholder="To" maxlength="25" ng-model="toUser">
+			<br/>
+			<label>Subject</label>
+			<input type="subject" class="form-control" placeholder="Subject" maxlength="40" ng-model="subject">
+			<br/>
+			<label>Body</label>
+			<textarea class="form-control" placeholder="Body" ng-model="content"></textarea>
+		</form>
+	</div>
+	<div class="modal-footer">
+		<input type="submit" value="Send" ng-click="send()" class="btn btn-primary" style="width: 15%"/>
+		<input type="close" value="Close" ng-click="close()" class="btn btn-default" style="width:15%"/>
+	</div>
+</div>

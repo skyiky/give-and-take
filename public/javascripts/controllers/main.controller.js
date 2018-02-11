@@ -11,6 +11,7 @@ angular.module('app')
 		$scope.users = [];
 		$scope.userPosts = [];
 		$scope.elsePosts = [];
+		$scope.messages = [];
 		$scope.foodFilter = true;
 		$scope.shelterFilter = true;
 		$scope.clothesFilter = true;
@@ -148,6 +149,14 @@ angular.module('app')
 						if (data.state === 'success') {
 							$scope.users = data.users;
 						}
+
+						if ($scope.user) {
+							$http.get('/message/' + $scope.user.username).success(function(data) {
+								if (data.state === 'success') {
+									$scope.messages = data.messages;
+								}
+							});
+						}
 					});
 				});
 			}, function (err) {
@@ -276,6 +285,9 @@ angular.module('app')
 						post: function() {
 							post.email = $scope.users[post.username].email;
 							return post;
+						},
+						messages: function() {
+							return null;
 						}
 					}
 				});
@@ -312,6 +324,9 @@ angular.module('app')
 					},
 					post: function() {
 						return null;
+					},
+					messages: function() {
+						return null;
 					}
 				}
 			});
@@ -325,6 +340,24 @@ angular.module('app')
 			});
 		}
 
+		$scope.openMessageModal = function() {
+			var messageModalInstance = $uibModal.open({
+				templateUrl: 'message.template.html',
+				controller: 'modalController',
+				resolve: {
+					user: function() {
+						return $scope.user;
+					},
+					post: function() {
+						return null;
+					},
+					messages: function() {
+						return $scope.messages;
+					}
+				}
+			})
+		}
+
 		$scope.openSignUpModal = function() {
 			var signUpModalInstance = $uibModal.open({
 				templateUrl: 'signup.template.html',
@@ -335,7 +368,11 @@ angular.module('app')
 					},
 					post: function() {
 						return null;
+					},
+					messages: function() {
+						return null;
 					}
+
 				}
 			});
 
@@ -358,7 +395,11 @@ angular.module('app')
 					},
 					post: function() {
 						return null;
+					},
+					messages: function() {
+						return null;
 					}
+
 				}
 			});
 
@@ -402,7 +443,11 @@ angular.module('app')
 						},
 						post: function() {
 							return post;
+						},
+						messages: function() {
+							return null;
 						}
+
 					}
 				});
 
@@ -426,7 +471,11 @@ angular.module('app')
 						},
 						post: function() {
 							return post;
+						},
+						messages: function() {
+							return null;
 						}
+
 					}
 				});
 
@@ -448,7 +497,11 @@ angular.module('app')
 					},
 					post: function() {
 						return post;
+					},
+					messages: function() {
+						return null;
 					}
+
 				}
 			})
 		}
