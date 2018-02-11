@@ -9,6 +9,7 @@ angular.module('app')
 		$scope.username = "";
 		$scope.password = "";
 		$scope.location = "";
+		$scope.title = "";
 		$scope.description = "";
 		$scope.selectedTypes = [];
 		$scope.user = user;
@@ -80,7 +81,8 @@ angular.module('app')
 				username: $scope.user.username,
 				serviceType: $scope.selectedTypes,
 				serviceContent: $scope.description,
-				location: $scope.location
+				location: $scope.location,
+				title: $scope.title
 			};
 
 			$http.post('/post/add', request).success(function (data) {

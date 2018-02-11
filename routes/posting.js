@@ -52,7 +52,6 @@ router.post('/add', function(req, res) {
     try {
         var currentData = JSON.parse(fs.readFileSync('./routes/donors.json', 'utf8'));
     } catch(e) {
-        return res.send({state: 'fail'});
     }
 
     var donorData = {};
@@ -61,12 +60,14 @@ router.post('/add', function(req, res) {
     if (!req.body.serviceType || 
         !req.body.serviceContent || 
         !req.body.location ||
+        !req.body.title || 
         req.body.serviceType.length < 1) {
         return res.send({state: 'fail'});
     } else {
         donorData.serviceType = req.body.serviceType;
         donorData.serviceContent = req.body.serviceContent;
         donorData.location = req.body.location;
+        donorData.title = req.body.title;
     }
     idCounter++;
 
@@ -92,7 +93,7 @@ router.post('/add', function(req, res) {
             return res.send({state: 'fail'});
         }
     })
-    
+
     return res.send({state: "success", id: idCounter});
 });
 
@@ -112,12 +113,14 @@ router.post('/update', function(req, res) {
         if (!req.body.serviceType || 
             !req.body.serviceContent || 
             !req.body.location ||
+            !req.body.title ||
             req.body.serviceType.length < 1) {
             return res.send({state: 'failed validation'});
         } else {
             donorData.serviceType = req.body.serviceType;
             donorData.serviceContent = req.body.serviceContent;
             donorData.location = req.body.location;
+            donorData.title = req.body.title;
         }
         currentData[username][postId] = donorData;
         var content = JSON.stringify(currentData);
