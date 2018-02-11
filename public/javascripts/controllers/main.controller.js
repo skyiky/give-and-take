@@ -109,7 +109,6 @@ angular.module('app')
 			var username = $window.sessionStorage.getItem("user");
 
 			$http.get('/auth/user/' + username).success(function(data) {
-				console.log(data);
 				if (data.state === 'success') {
 					$scope.user = data.user;
 					$scope.isLoggedIn = true;
@@ -169,6 +168,11 @@ angular.module('app')
 				$uibModal.open({
 					templateUrl: 'post.template.html',
 					controller: 'modalController',
+					resolve: {
+						user: function() {
+							return $scope.user;
+						}
+					}
 				});
 			});
 		}
@@ -176,7 +180,12 @@ angular.module('app')
 		$scope.openSignInModal = function() {
 			var signInModalInstance = $uibModal.open({
 				templateUrl: 'signin.template.html',
-				controller: 'modalController'
+				controller: 'modalController',
+				resolve: {
+					user: function() {
+						return $scope.user;
+					}
+				}
 			});
 
 			signInModalInstance.result.then(function(user) {
@@ -188,11 +197,38 @@ angular.module('app')
 			});
 		}
 
+		$scope.openAddPostingModal = function() {
+			var addPostingModalInstance = $uibModal.open({
+				templateUrl: 'post.add.template.html',
+				controller: 'modalController',
+				resolve: {
+					user: function() {
+						return $scope.user;
+					}
+				}
+			});
+
+			addPostingModalInstance.result.then(function(posting) {
+				//add marker on map
+			});
+		}
+
 		$scope.openModal = function() {
 			$uibModal.open({
 				templateUrl: 'post.template.html',
 				controller: 'modalController',
+				resolve: {
+					user: function() {
+						return $scope.user;
+					}
+				}
 			})
+		}
+
+		$scope.logout = function() {
+			$window.sessionStorage.clear();
+			$scope.user = null;
+			$scope.isLoggedIn = false;
 		}
 
 		initPage();

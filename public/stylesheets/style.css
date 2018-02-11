@@ -92,3 +92,11 @@ p {
 	height: 4vh;
 	width: 20vw;
 }
+
+.footer {
+	margin-top: 750px;
+}
+
+textarea {
+    resize: none;
+}

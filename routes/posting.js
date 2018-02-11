@@ -68,23 +68,27 @@ router.post('/add', function(req, res) {
         donorData.location = req.body.location;
     }
     idCounter++;
-    if (!currentData[username]) {
-        return res.send({state: 'fail'});
-    } else {
-        currentData[username][idCounter] = donorData;
+
+    // if no data exists
+    if (!currentData) {
+        currentData = {};
     }
+    if (!currentData.hasOwnProperty(username)) {
+        currentData[username] = {};
+    }
+
+    currentData[username][idCounter] = donorData;
 
     var content = JSON.stringify(currentData);
     fs.writeFile("./routes/donors.json", content, 'utf8', function (err) {
         if (err) {
-            return console.log(err);
+            return res.send({state: 'fail'});
         }
-        console.log("The file was saved!");
     })
 
-    fs.writeFile("./routes/postIDCoutner", idCounter, 'utf8', function (err) {
+    fs.writeFile("./routes/postIDCounter", idCounter, 'utf8', function (err) {
         if (err) {
-            return console.log(err);
+            return res.send({state: 'fail'});
         }
     })
     return res.send({state: "success", dataAfter: donorData});

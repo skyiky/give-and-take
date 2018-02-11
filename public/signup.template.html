@@ -1,0 +1,83 @@
+<div class="modal-content">
+	<div class="modal-header">
+		<h1>Sign up</h1>
+	</div>
+	<div class="modal-body">
+		<div class="panel panel-danger" ng-show="showLoginError">
+			<div class="panel-heading">
+				<h4 class="panel-title">
+					<span>{{signupError}}</span>
+				</h4>
+			</div>
+		</div>
+		<i class="fa fa-spinner fa-spin" ng-show="didUserSubmit"></i>
+		<form ng-submit="submit()" ng-hide="didUserSubmit || showSuccess">
+
+			<label>Username</label>
+			<input type="username" class="form-control" placeholder="Username"
+			ng-model="username" required>
+
+			<br/>
+
+			<label>Email Address</label>
+			<input type="email" class="form-control" placeholder="Email Address"
+			ng-model="email" required>
+
+			<br/>
+
+			<label>First Name</label>
+			<input type="firstname" class="form-control" placeholder="First name"
+			ng-model="firstname" required>
+
+			&nbsp;
+
+			<label>Surname</label>
+			<input type="surname" class="form-control" placeholder="Surname"
+			ng-model="surname" required>
+
+			<br/>
+
+			<input type="radio" name="gender" value="male" checked> Male &nbsp;
+			<input type="radio" name="gender" value="female"> Female &nbsp;
+			<input type="radio" name="gender" value="other"> Other &nbsp;
+
+			<br/>
+
+			<label>Street Address</label>
+			<input type="address" class="form-control" placeholder="Street Address"
+			ng-model="address" required>
+
+			<br/>
+
+			<label>City</label>
+			<input type="city" class="form-control" placeholder="City"
+			ng-model="city" required>
+
+			&nbsp;
+
+			<label>Country</label>
+			<input type="country" class="form-control" placeholder="Country"
+			ng-model="country" required>
+
+			&nbsp;
+
+			<label>Postal Code</label>
+			<input type="postalCode" class="form-control" placeholder="Postal Code"
+			ng-model="postalCode" required>
+			<br/>
+
+			<label>Password</label>
+			<input type="password" class="form-control" placeholder="Password" ng-model="password" required>
+
+			<br/>
+
+			<label>Re-enter Password</label>
+			<input type="password" class="form-control" placeholder="Password" ng-model="passwordConfirm" required>
+
+		</form>
+	</div>
+	<div class="modal-footer">
+		<input type="submit" value="Sign In" ng-click="signin()" class="btn btn-primary" style="width: 15%"/>
+		<input type="close" value="Close" ng-click="close()" class="btn btn-default" style="width:15%"/>
+	</div>
+</div>
