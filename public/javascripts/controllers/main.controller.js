@@ -9,6 +9,10 @@ angular.module('app')
 		$scope.completeSetPosts = [];
 		$scope.search = "";
 		$scope.users = [];
+		$scope.foodFilter = true;
+		$scope.shelterFilter = true;
+		$scope.clothesFilter = true;
+		$scope.miscFilter = true;
 		
 		function initPage() {
 			var mapOptions = {
@@ -151,9 +155,57 @@ angular.module('app')
 		$scope.loadMarkers = function() {
 			$scope.clearMarkers();
 
+			var categories = [];
+
+			if ($scope.foodFilter) {
+				categories.push(0);
+			}
+
+			if ($scope.shelterFilter) {
+				categories.push(1);
+			}
+
+			if ($scope.clothesFilter) {
+				categories.push(2);
+			}
+
+			if ($scope.miscFilter) {
+				categories.push(3);
+			}
+
+			$scope.posts = [];
+			
+			$scope.completeSetPosts.forEach(function(post) {
+				post.serviceType.forEach(function(type) {
+					if (categories.includes(type.value)) {
+						$scope.posts.push(post);
+					}
+				});
+			});
+
 			for (var i = 0; i < $scope.posts.length; i++) {
 				addMarker($scope.posts[i]);
 			}
+		}
+
+		$scope.toggleFoodFilter = function() {
+			$scope.foodFilter = !$scope.foodFilter;
+			$scope.loadMarkers();
+		}
+
+		$scope.toggleShelterFilter = function() {
+			$scope.shelterFilter = !$scope.shelterFilter;
+			$scope.loadMarkers();
+		}
+
+		$scope.toggleClothesFilter = function() {
+			$scope.clothesFilter = !$scope.clothesFilter;
+			$scope.loadMarkers();
+		}
+
+		$scope.toggleMiscFilter = function() {
+			$scope.miscFilter = !$scope.miscFilter;
+			$scope.loadMarkers();
 		}
 
 		function addMarker(post) {

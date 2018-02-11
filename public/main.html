@@ -7,6 +7,24 @@
 			<button class="btn btn-primary" ng-click="openSignUpModal()">Sign Up</button>
 			<button class="btn btn-primary" ng-click="openSignInModal()">Log In</button>
 		</div>
+		<br ng-if="!isLoggedIn"/>
+		<br ng-if="!isLoggedIn"/>
+		<div class="btn-group btn-sidebar-grp-1">
+			<button class="btn btn-default1" ng-click="toggleFoodFilter()">
+				<i class="fa fa-cutlery" style="color: #FF9900"></i>
+			</button>
+			<button class="btn btn-default1" ng-click="toggleShelterFilter()">
+				<i class="fa fa-home" style="color: #00CC66"></i>
+			</button>
+			<button class="btn btn-default1" ng-click="toggleClothesFilter()">
+				<i class="fa fa-black-tie" style="color: #3399FF"></i>
+			</button>
+			<button class="btn btn-default1" ng-click="toggleMiscFilter()">
+				<i class="fa fa-archive" style="color: #CC99FF"></i>
+			</button>
+		</div>
+		<br/>
+		<br/>
 		<div ng-if="isLoggedIn" class="btn-sidebar-grp">
 			<button class="btn btn-primary" ng-click="openAddPostingModal()">
 				<i class="fa fa-plus"></i>   Submit a posting</button>
@@ -54,13 +72,13 @@
 
 			<div ng-if="isLoggedIn" class="btn-sidebar-grp footer">
 				<button class="btn btn-danger" ng-click="logout()">
-				Logout</button>
+					Logout</button>
+				</div>
+			</div>
+			<div class="col-xs-9 view">
+				<div id="map"></div>
+				<div id="search">
+					<input id="search-bar" type="text" name="search" placeholder="Search" ng-model="search">
+				</div>
 			</div>
 		</div>
-		<div class="col-xs-9 view">
-			<div id="map"></div>
-			<div id="search">
-				<input id="search-bar" type="text" name="search" placeholder="Search" ng-model="search">
-			</div>
-		</div>
-	</div>

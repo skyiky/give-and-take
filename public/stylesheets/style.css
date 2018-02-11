@@ -63,6 +63,10 @@ p {
 	left: 35%;
 }
 
+.btn-sidebar-grp-1 {
+	left: 34.2%;
+}
+
 .posting-bar {
 	background-color: #33cccc;
 	padding: 15px;
@@ -151,4 +155,12 @@ textarea {
 .row-field {
 	display: flex; /* 2. display flex to the rescue */
   flex-direction: row;
+}
+
+.btn-default1 {
+	border: #A9A9A9 1px solid;
+}
+
+.btn-default1:hover {
+	background-color: #D4D4D4;
 }
