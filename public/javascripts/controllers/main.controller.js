@@ -287,6 +287,9 @@ angular.module('app')
 						},
 						messages: function() {
 							return null;
+						},
+						message: function() {
+							return null;
 						}
 					}
 				});
@@ -326,6 +329,9 @@ angular.module('app')
 					},
 					messages: function() {
 						return null;
+					},
+					message: function() {
+						return null;
 					}
 				}
 			});
@@ -352,6 +358,9 @@ angular.module('app')
 					},
 					messages: function() {
 						return $scope.messages;
+					},
+					message: function() {
+						return null;
 					}
 				}
 			})
@@ -370,8 +379,10 @@ angular.module('app')
 					},
 					messages: function() {
 						return null;
+					},
+					message: function() {
+						return null;
 					}
-
 				}
 			});
 
@@ -396,6 +407,9 @@ angular.module('app')
 						return null;
 					},
 					messages: function() {
+						return null;
+					},
+					message: function() {
 						return null;
 					}
 
@@ -425,6 +439,9 @@ angular.module('app')
 						return post;
 					},
 					messages: function() {
+						return null;
+					},
+					message: function() {
 						return null;
 					}
 				}
@@ -472,8 +489,10 @@ angular.module('app')
 						},
 						messages: function() {
 							return null;
+						},
+						message: function() {
+							return null;
 						}
-
 					}
 				});
 
@@ -500,8 +519,10 @@ angular.module('app')
 						},
 						messages: function() {
 							return null;
+						},
+						message: function() {
+							return null;
 						}
-
 					}
 				});
 

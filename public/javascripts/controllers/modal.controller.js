@@ -1,6 +1,6 @@
 angular.module('app')
-.controller('modalController', ['$scope', '$rootScope','$uibModal', '$uibModalInstance', '$http', 'user', 'post', 'messages',
-	function($scope, $rootScope, $uibModal, $uibModalInstance, $http, user, post, messages) {
+.controller('modalController', ['$scope', '$rootScope','$uibModal', '$uibModalInstance', '$http', 'user', 'post', 'messages', 'message',
+	function($scope, $rootScope, $uibModal, $uibModalInstance, $http, user, post, messages, message) {
 		$scope.didUserSubmit = false;
 		$scope.showLoginError = false;
 		$scope.showPostingError = false;
@@ -34,6 +34,7 @@ angular.module('app')
 		$scope.user = user;
 		$scope.post = post;
 		$scope.messages = messages;
+		$scope.message = message;
 		$scope.types = [
 		{
 			name: 'Food',
@@ -86,9 +87,12 @@ angular.module('app')
 					},
 					post: function() {
 						return null;
-					}
+					},
 					messages: function() {
 						return $scope.messages;
+					},
+					message: function() {
+						return message;
 					}
 				}
 			});
@@ -98,7 +102,7 @@ angular.module('app')
 		}
 
 		$scope.deleteMessage = function() {
-		
+
 		}
 
 		$scope.toggleView = function(state) {
