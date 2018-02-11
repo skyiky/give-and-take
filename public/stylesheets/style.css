@@ -5,8 +5,8 @@ body {
 	height: 100%;
 	width: 100%;
 	height: 100%;
-	font-family: sans-serif;
 	overflow-x: hidden;
+	font-family: Karla;
 }
 
 html {
@@ -78,8 +78,15 @@ p {
 	left: 35%;
 }
 
+.sidebar-section {
+	height: 22%;
+	padding: 0 0 0 0;
+	margin: 0 0 0 0;
+	overflow-y: scroll;
+}
+
 .btn-sidebar-grp-1 {
-	left: 34.2%;
+	left: 34.2%; /*how can we fix this so it's center of sidebar*/
 }
 
 .posting-bar {
@@ -141,7 +148,7 @@ p {
 }
 
 .footer {
-	margin-top: 720px;
+	margin-top: 10px;
 }
 
 textarea {
