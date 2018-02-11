@@ -207,6 +207,10 @@ angular.module('app')
 					}
 				}
 			});
+
+			addPostingModalInstance.result.then(function(posting) {
+				//add marker on map
+			});
 		}
 
 		$scope.openModal = function() {
@@ -223,7 +227,7 @@ angular.module('app')
 
 		$scope.logout = function() {
 			$window.sessionStorage.clear();
-			$scope.uesr = null;
+			$scope.user = null;
 			$scope.isLoggedIn = false;
 		}
 

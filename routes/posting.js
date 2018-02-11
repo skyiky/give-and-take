@@ -40,18 +40,29 @@ router.get('/:username', function(req, res, next) {
 
 router.post('/add', function(req, res) {
 
-    var currentData = JSON.parse(fs.readFileSync('./routes/donors.json', 'utf8'));
+    try {
+        var currentData = JSON.parse(fs.readFileSync('./routes/donors.json', 'utf8'));
+    } catch(e) {
+
+    }
+
     var donorData = {};
     var username = req.body.username;
     
     donorData.serviceType = req.body.serviceType;
     donorData.serviceContent = req.body.serviceContent;
     donorData.location = req.body.location;
-    donorData.name = req.body.name;
 
     idCounter++;
 
-    console.log(currentData);
+    // if no data exists
+    if (!currentData) {
+        currentData = {};
+    }
+
+    if (!currentData.hasOwnProperty(username)) {
+        currentData[username] = {};
+    }
 
     currentData[username][idCounter] = donorData;
     
@@ -60,15 +71,13 @@ router.post('/add', function(req, res) {
 
     fs.writeFile("./routes/donors.json", content, 'utf8', function (err) {
         if (err) {
-            return console.log(err);
+            return res.send({state: 'fail'});
         }
-
-        console.log("The file was saved!");
     })
 
-    fs.writeFile("./routes/postIDCoutner", idCounter, 'utf8', function (err) {
+    fs.writeFile("./routes/postIDCounter", idCounter, 'utf8', function (err) {
         if (err) {
-            return console.log(err);
+            return res.send({state: 'fail'});
         }
     })
 

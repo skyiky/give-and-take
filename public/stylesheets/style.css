@@ -96,3 +96,7 @@ p {
 .footer {
 	margin-top: 750px;
 }
+
+textarea {
+    resize: none;
+}

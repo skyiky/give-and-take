@@ -11,12 +11,22 @@
 			</div>
 		</div>
 		<i class="fa fa-spinner fa-spin" ng-show="didUserSubmit"></i>
-		<form ng-submit="submit()" ng-hide="didUserSubmit || showSuccess">
+		<form ng-submit="submit()" ng-hide="didUserSubmit">
+	<br/>
+	<label>Service Type</label>
+	<div     
+    isteven-multi-select
+    input-model="types"
+    output-model="selectedTypes"
+    button-label="name"
+    item-label="name"
+    tick-property="ticked">
+	</div>
 	<br/>
 	<label>Description</label>
 	<textarea class="form-control" placeholder="Description" ng-model="description"></textarea>
 	<br/>
-	<label>Location</label>
+	<label>Postal Code</label>
 	<input type="location" class="form-control" placeholder="Location" ng-model="location">
 </form>
 </div>
