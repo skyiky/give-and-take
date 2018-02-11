@@ -22,9 +22,9 @@
 		</div>
 		<i class="fa fa-spinner fa-spin" ng-show="didUserSubmit"></i>
 		<div ng-repeat="message in messages" ng-show="inboxView" ng-hide="didUserSubmit || sendView">
-			<div style="height: 10%">
+			<div style="height: 10%" ng-if="message">
 				<div class="pull-left">
-					<button class="btn btn-danger" style="margin-top: 18%" ng-click="deleteMessage(message.id)">
+					<button class="btn btn-danger" style="margin-top: 18%" ng-click="openDeleteMessage(message)">
 						<i class="fa fa-minus"></i>
 					</button>
 				</div>
@@ -39,6 +39,9 @@
 				</div>
 			</div>
 		</div>
+		<div ng-if="inboxView && messages.length < 1">
+			<h3>No messages</h3>
+		</div>
 		<form ng-submit="submit()" ng-hide="didUserSubmit || !messageView" ng-show="sendView">
 			<label>To</label>
 			<input type="to" class="form-control" placeholder="To" maxlength="25" ng-model="toUser">
@@ -51,7 +54,7 @@
 		</form>
 	</div>
 	<div class="modal-footer">
-		<input type="submit" value="Send" ng-click="send()" class="btn btn-primary" style="width: 15%"/>
+		<input type="submit" value="Send" ng-click="send()" class="btn btn-primary" style="width: 15%" ng-if="sendView" ng-hide="didUserSubmit || inboxView"/>
 		<input type="close" value="Close" ng-click="close()" class="btn btn-default" style="width:15%"/>
 	</div>
 </div>

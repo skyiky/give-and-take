@@ -97,12 +97,19 @@ angular.module('app')
 				}
 			});
 
-			deleteMessageModalInstance.result.then(function(message) {
+			deleteMessageModalInstance.result.then(function(messageId) {
+				var messageIndex = $scope.messages.findIndex(m => m.id == messageId);
+
+				delete $scope.messages[messageIndex];
 			});
 		}
 
 		$scope.deleteMessage = function() {
-
+			$http.delete('message/' + $scope.message.id).success(function(data) {
+				if (data.state === 'success') {
+					$uibModalInstance.close($scope.message.id);
+				}
+			});
 		}
 
 		$scope.toggleView = function(state) {
