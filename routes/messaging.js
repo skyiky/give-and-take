@@ -51,6 +51,10 @@ router.get('/:username', function(req, res) {
 	} catch(e) {
 	}
 
+	if (!messages) {
+		return res.send({state: 'fail'});
+	}
+
 	var userMessages = [];
 	var username = req.params.username;
 

@@ -40,7 +40,7 @@
 				<div class="sidebar-section">
 					<div class="btn-sidebar-grp posting-bar" ng-repeat="post in userPosts">
 						<div ng-click="openModal(post)">
-							<div class="post-title pull-left">
+							<div class="post-title pull-left" style="position: relative; bottom: 9px">
 								<div class="icon-list" ng-repeat="serviceType in post.serviceType">
 									<i class="fa fa-cutlery fa-1.5x contentIcon" ng-if="serviceType.value == 0"></i>
 									<i class="fa fa-home fa-1.5x contentIcon" ng-if="serviceType.value == 1"></i>
@@ -51,9 +51,9 @@
 							</div>
 
 							
-							<div class="modify-post-btn-grp pull-right">
-								<button class="btn"><i class="fa fa-wrench fa-1.5x" ng-click="openEditPostingModal($event, post)"></i></button>
-								<button class="btn"><i class="fa fa-trash fa-1.5x" ng-click="openDeletePostingModal($event, post)"></i></button>
+							<div class="modify-post-btn-grp pull-right" style="position: relative; bottom: 14.5px">
+								<button class="btn"><i class="fa fa-wrench" ng-click="openEditPostingModal($event, post)"></i></button>
+								<button class="btn"><i class="fa fa-trash" ng-click="openDeletePostingModal($event, post)"></i></button>
 							</div>
 						</div>
 					</div>
@@ -64,7 +64,7 @@
 				<div class="sidebar-section">
 					<div class="btn-sidebar-grp posting-bar" ng-repeat="post in elsePosts">
 						<div ng-click="openModal(post)">
-							<div class="post-title pull-left">
+							<div class="post-title pull-left" style="position: relative; bottom: 9px">
 								<div class="icon-list" ng-repeat="serviceType in post.serviceType">
 									<i class="fa fa-cutlery fa-1.5x contentIcon" ng-if="serviceType.value == 0"></i>
 									<i class="fa fa-home fa-1.5x contentIcon" ng-if="serviceType.value == 1"></i>
@@ -74,7 +74,7 @@
 								<b>{{post.title}}</b>
 							</div>
 							
-							<div class="modify-post-btn-grp pull-right">
+							<div class="modify-post-btn-grp pull-right" style="position: relative; bottom: 14.5px">
 								<button class="btn"><i class="fa fa-wrench fa-1.5x" ng-click="openEditPostingModal($event, post)"></i></button>
 								<button class="btn"><i class="fa fa-trash fa-1.5x" ng-click="openDeletePostingModal($event, post)"></i></button>
 							</div>
