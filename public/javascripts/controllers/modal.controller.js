@@ -27,7 +27,7 @@ angular.module('app')
 		$scope.passwordConfirm = "";
 		$scope.title = "";
 		$scope.description = "";
-		$scope.toUser = "";
+		$scope.toUser = (post) ? post.username : "";
 		$scope.subject = "";
 		$scope.content = "";
 		$scope.selectedTypes = [];
@@ -77,6 +77,14 @@ angular.module('app')
 			$scope.location = $scope.post.location;
 		}
 
+		$scope.openMessage = function(message) {
+			$scope.messageView = true;
+			$scope.inboxView = false;
+			$scope.sendView = false;
+
+			$scope.message = message;
+		}
+
 		$scope.openDeleteMessage = function(message) {
 			var deleteMessageModalInstance = $uibModal.open({
 				templateUrl: 'message.delete.template.html',
@@ -100,7 +108,7 @@ angular.module('app')
 			deleteMessageModalInstance.result.then(function(messageId) {
 				var messageIndex = $scope.messages.findIndex(m => m.id == messageId);
 
-				delete $scope.messages[messageIndex];
+				$scope.messages.splice(messageIndex, 1);
 			});
 		}
 
@@ -116,9 +124,11 @@ angular.module('app')
 			if (state === 'inbox') {
 				$scope.inboxView = true;
 				$scope.sendView = false;
+				$scope.messageView = false;
 			} else {
 				$scope.inboxView = false;
 				$scope.sendView = true;
+				$scope.messageView = false;
 			}
 		}
 
@@ -147,8 +157,14 @@ angular.module('app')
 					$scope.didUserSubmit = false;
 					$scope.showMessagingError = false;
 					$scope.messagingError = "";
+
+					// did we come from post view
+					if (!$scope.messages) {
+						$scope.close();
+						return;
+					}
+
 					$scope.messages.unshift(data.message);
-					console.log($scope.messages);
 					$scope.toggleView('inbox');
 				}
 			})
