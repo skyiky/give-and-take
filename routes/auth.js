@@ -25,7 +25,9 @@ router.post('/signup', function(req, res, next) {
     	password: req.body.password
     };
 
-    fs.writeFile("./routes/donors.json", users, 'utf8', function (err) {
+    var content = JSON.stringify(users)
+
+    fs.writeFile("./routes/users.json", content, 'utf8', function (err) {
         if (err) {
             return res.send({state: 'fail'});
         } else {

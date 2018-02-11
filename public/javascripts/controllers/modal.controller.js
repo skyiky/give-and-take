@@ -61,6 +61,7 @@ angular.module('app')
 				$scope.didUserSubmit = false;
 				$scope.showSignUpError = true;
 				$scope.signupError = "Passwords do not match. Please try again."
+				return;
 			}
 
 			var request = {
