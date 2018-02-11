@@ -132,7 +132,7 @@ angular.module('app')
 								post.id = parseInt(id);
 
 								$scope.posts.push(post);
-								console.log(post);
+								
 								if ($scope.user && post.username.toLowerCase() == $scope.user.username.toLowerCase()) {
 									$scope.userPosts.push(post);
 								} else {
@@ -410,6 +410,26 @@ angular.module('app')
 					$scope.usersPosts.push(posting);
 					$scope.completeSetPosts.push(posting);
 				}
+			});
+		}
+
+		$scope.openDeletePostingModal = function($event, post) {
+			$event.stopPropagation();
+			var deletePostingModalInstance = $uibModal.open({
+				templateUrl: 'post.delete.template.html',
+				controller: 'modalController',
+				resolve: {
+					user: function() {
+						return $scope.user;
+					},
+					post: function() {
+						return post;
+					}
+				}
+			});
+
+			deletePostingModalInstance.result.then(function(posting) {
+
 			});
 		}
 
