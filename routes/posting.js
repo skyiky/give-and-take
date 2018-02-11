@@ -5,21 +5,22 @@ var idCounter = fs.readFileSync('./routes/postIDCounter.txt', 'utf8');
 idCounter = parseInt(idCounter);
 
 router.delete('/delete', function(req, res) {
-    var user = req.body.username;
-    var id = req.body.postId
+    var username = req.body.username;
+    var postId = req.body.id
     var obj = JSON.parse(fs.readFileSync('./routes/donors.json', 'utf8'));
-    if (obj[user][id]) {
-        delete obj[user][id];
-    }   
-    var content = JSON.stringify(obj);
-    fs.writeFile("./routes/donors.json", content, 'utf8', function (err) {
+    if (obj[username][postId]) {
+        delete obj[username][postId];
+        var content = JSON.stringify(obj);
+            fs.writeFile("./routes/donors.json", content, 'utf8', function (err) {
         if (err) {
             return console.log(err);
         }
-
         console.log("The file was saved!");
     })
-    res.send(obj);
+    res.send({state: "success", data: obj});
+    } else {
+        res.send({state: "failed"});
+    }
 });
 
 router.get('/all', function(req, res) {
@@ -28,41 +29,56 @@ router.get('/all', function(req, res) {
     } catch(e) {
         return res.send({state: 'fail'});
     }
-
-    return res.send({state: "success"}, obj);
+    res.send({state: "success", data: obj});
 });
 
 router.get('/:username', function(req, res, next) {
-    var obj = JSON.parse(fs.readFileSync('./routers/donors.json', 'utf8'));
+    try {
+        var obj = JSON.parse(fs.readFileSync('./routes/donors.json', 'utf8'));
+    } catch(e) {
+        return res.send({state: 'fail'});
+    }
     var id = req.params.username;
-    res.send({state: "success"}, obj[id]);
+    var userData = obj[id];
+    if(userData == null) {
+        return res.send({state: 'fail'});
+    } else {
+        res.send({state: "success", data: userData});
+    }
 });
 
 router.post('/add', function(req, res) {
+    try {
+        var currentData = JSON.parse(fs.readFileSync('./routes/donors.json', 'utf8'));
+    } catch(e) {
+        return res.send({state: 'fail'});
+    }
 
-    var currentData = JSON.parse(fs.readFileSync('./routes/donors.json', 'utf8'));
     var donorData = {};
     var username = req.body.username;
-    
-    donorData.serviceType = req.body.serviceType;
-    donorData.serviceContent = req.body.serviceContent;
-    donorData.location = req.body.location;
-    donorData.name = req.body.name;
 
+    if (!req.body.serviceType || 
+        !req.body.serviceContent || 
+        !req.body.location ||
+        req.body.serviceType.length < 1) {
+        return res.send({state: 'fail'});
+    } else {
+        donorData.serviceType = req.body.serviceType;
+        donorData.serviceContent = req.body.serviceContent;
+        donorData.location = req.body.location;
+    }
     idCounter++;
-
-    console.log(currentData);
-
-    currentData[username][idCounter] = donorData;
-    
+    if (!currentData[username]) {
+        return res.send({state: 'fail'});
+    } else {
+        currentData[username][idCounter] = donorData;
+    }
 
     var content = JSON.stringify(currentData);
-
     fs.writeFile("./routes/donors.json", content, 'utf8', function (err) {
         if (err) {
             return console.log(err);
         }
-
         console.log("The file was saved!");
     })
 
@@ -71,43 +87,42 @@ router.post('/add', function(req, res) {
             return console.log(err);
         }
     })
-
-    return res.send({state: "success"});
+    return res.send({state: "success", dataAfter: donorData});
 });
 
 
 router.post('/update', function(req, res) {
+    try {
+        var currentData = JSON.parse(fs.readFileSync('./routes/donors.json', 'utf8'));
+    } catch(e) {
+        return res.send({state: 'fail'});
+    }
 
-    var currentData = fs.readFileSync('./routes/donors.json', 'utf8');
-    
-    currentData = JSON.parse(currentData);
     var username = req.body.username;
-    var postID = req.body.ID;
+    var postId = req.body.id;
+    var donorData = {};
 
-
-    if (currentData[username]) {
-        if (currentData[username][postID]){
-
-            var donorData = {};
+    if (currentData[username][postId]) {
+        if (!req.body.serviceType || 
+            !req.body.serviceContent || 
+            !req.body.location ||
+            req.body.serviceType.length < 1) {
+            return res.send({state: 'failed validation'});
+        } else {
             donorData.serviceType = req.body.serviceType;
             donorData.serviceContent = req.body.serviceContent;
             donorData.location = req.body.location;
-            donorData.name = req.body.name;
-
-            currentData[username][postID] = donorData;
-            var content = JSON.stringify(currentData);
-        } else {
-            return res.send({state: "failed"});
         }
+        currentData[username][postId] = donorData;
+        var content = JSON.stringify(currentData);
     } else {
-        return res.send({state: "failed"});
+        return res.send({state: "failed postid nonexistent"});
     }
 
     fs.writeFile("./routes/donors.json", content, 'utf8', function (err) {
         if (err) {
             return console.log(err);
         }
-
         console.log("The file was saved!");
     })
 
