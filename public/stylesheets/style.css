@@ -186,3 +186,8 @@ textarea {
 .btn-default1:hover {
 	background-color: #D4D4D4;
 }
+
+.message {
+	margin-top: -10%;
+	margin-right: 2%;
+}
