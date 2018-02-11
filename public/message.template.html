@@ -21,10 +21,26 @@
 			</div>
 		</div>
 		<i class="fa fa-spinner fa-spin" ng-show="didUserSubmit"></i>
-		<div ng-repeat="message in messages" ng-show="inboxView" ng-hide="didUserSubmit || sendView">
-			<div style="height: 10%">
+		<div ng-if="messageView">
+			<div>
 				<div class="pull-left">
-					<button class="btn btn-danger" style="margin-top: 18%" ng-click="deleteMessage(message.id)">
+					<label>From: </label> {{ message.fromUser}}
+				</div>
+				<div class="pull-right">
+					<label>At: </label> {{message.timestamp}}
+				</div>
+			</div>
+			<br/>
+			<br/>
+			<label>Subject: </label> {{message.subject}}
+			<br/>
+			<label>Body: </label> {{message.content}}
+			<br/>
+		</div>
+		<div ng-repeat="message in messages" ng-show="inboxView" ng-hide="didUserSubmit || sendView || messageView">
+			<div style="height: 10%" ng-if="message">
+				<div class="pull-left">
+					<button class="btn btn-danger" style="margin-top: 18%" ng-click="openDeleteMessage(message)">
 						<i class="fa fa-minus"></i>
 					</button>
 				</div>
@@ -39,7 +55,10 @@
 				</div>
 			</div>
 		</div>
-		<form ng-submit="submit()" ng-hide="didUserSubmit || !messageView" ng-show="sendView">
+		<div ng-if="inboxView && messages.length == 0">
+			<h3>No messages</h3>
+		</div>
+		<form ng-submit="submit()" ng-hide="didUserSubmit || !nboxView || messageView" ng-show="sendView">
 			<label>To</label>
 			<input type="to" class="form-control" placeholder="To" maxlength="25" ng-model="toUser">
 			<br/>
@@ -51,7 +70,8 @@
 		</form>
 	</div>
 	<div class="modal-footer">
-		<input type="submit" value="Send" ng-click="send()" class="btn btn-primary" style="width: 15%"/>
+		<input type="back" value="Back" ng-click="toggleView('inbox')" class="btn btn-default1" style="width:15%" ng-if="messageView"/>
+		<input type="submit" value="Send" ng-click="send()" class="btn btn-primary" style="width: 15%" ng-if="sendView" ng-hide="didUserSubmit || inboxView || messageView"/>
 		<input type="close" value="Close" ng-click="close()" class="btn btn-default" style="width:15%"/>
 	</div>
 </div>

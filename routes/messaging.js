@@ -76,7 +76,7 @@ router.delete('/:id', function(req, res) {
     }
 
     if (!messages) {
-    	return res.state({state: 'fail', error: 'no messages exist'});
+    	return res.send({state: 'fail', error: 'no messages exist'});
     }
 
     if (messages[req.params.id]) {
@@ -84,10 +84,10 @@ router.delete('/:id', function(req, res) {
     	var content = JSON.stringify(messages);
     	fs.writeFile("./routes/messages.json", content, 'utf8', function (err) {
     		if (err) {
-    			return res.state({state: 'fail', error: 'failed to delete message'});
+    			return res.send({state: 'fail', error: 'failed to delete message'});
     		}
 
-    		return res.state({state: 'success'});
+    		return res.send({state: 'success'});
     	})
     }
 })
