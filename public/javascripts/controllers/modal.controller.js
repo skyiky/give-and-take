@@ -1,10 +1,14 @@
 angular.module('app')
-.controller('modalController', ['$scope', '$rootScope','$uibModal', '$uibModalInstance', '$http', 'user', 'post',
-	function($scope, $rootScope, $uibModal, $uibModalInstance, $http, user, post) {
+.controller('modalController', ['$scope', '$rootScope','$uibModal', '$uibModalInstance', '$http', 'user', 'post', 'messages',
+	function($scope, $rootScope, $uibModal, $uibModalInstance, $http, user, post, messages) {
 		$scope.didUserSubmit = false;
 		$scope.showLoginError = false;
 		$scope.showPostingError = false;
 		$scope.showSignUpError = false;
+		$scope.showMessagingError = false;
+		$scope.inboxView = true;
+		$scope.sendView = false;
+		$scope.messagingError = "";
 		$scope.loginError = "";
 		$scope.postingError = "";
 		$scope.signupError = "";
@@ -23,9 +27,13 @@ angular.module('app')
 		$scope.passwordConfirm = "";
 		$scope.title = "";
 		$scope.description = "";
+		$scope.toUser = "";
+		$scope.subject = "";
+		$scope.content = "";
 		$scope.selectedTypes = [];
 		$scope.user = user;
 		$scope.post = post;
+		$scope.messages = messages;
 		$scope.types = [
 		{
 			name: 'Food',
@@ -68,9 +76,48 @@ angular.module('app')
 			$scope.location = $scope.post.location;
 		}
 
+		$scope.toggleView = function(state) {
+			if (state === 'inbox') {
+				$scope.inboxView = true;
+				$scope.sendView = false;
+			} else {
+				$scope.inboxView = false;
+				$scope.sendView = true;
+			}
+		}
+
 		$scope.close = function() {
 			$uibModalInstance.close();
 		};
+
+		$scope.send = function() {
+			$scope.didUserSubmit = true;
+			$scope.showMessagingError = false;
+			$scope.messagingError = "";
+
+			var request = {
+				toUser: $scope.toUser,
+				fromUser: $scope.user.username,
+				subject: $scope.subject,
+				content: $scope.content
+			};
+
+			$http.post('/message/send', request).success(function(data) {
+				if (data.state === 'fail') {
+					$scope.didUserSubmit = false;
+					$scope.showMessagingError = true;
+					$scope.messagingError = data.error;
+				} else if (data.state === 'success') {
+					$scope.didUserSubmit = false;
+					$scope.showMessagingError = false;
+					$scope.messagingError = "";
+					$scope.messages.unshift(data.message);
+					console.log($scope.messages);
+					$scope.toggleView('inbox');
+				}
+			})
+
+		}
 
 		$scope.signup = function() {
 			$scope.didUserSubmit = true;
@@ -119,8 +166,6 @@ angular.module('app')
 			$scope.showPostingError = false;
 			$scope.postingError = "";
 
-			console.log($scope.post);
-
 			var request = {
 				username: $scope.post.username,
 				id: $scope.post.id,
@@ -161,6 +206,33 @@ angular.module('app')
 			});
 		}
 		
+		$scope.delete = function() {
+			var request = {
+				username: $scope.post.username,
+				id: $scope.post.id
+			};
+			console.log(request);
+			$http.delete('post/delete', request).success(function (data) {
+				if (data.state === 'fail') {
+					$scope.didUserSubmit = false;
+					$scope.showPostingError = true;
+					$scope.postingError = "An unknown error occured";
+				} else if (data.state === 'success') {
+					$scope.didUserSubmit = false;
+					$scope.showPostingError = false;
+					$scope.postingError = "";
+					$uibModalInstance.close(request);
+				} else {
+					$scope.didUserSubmit = false;
+					$scope.showPostingError = true;
+					$scope.postingError = "An unknown error occured";
+				}
+			}, function(err) {
+				$scope.didUserSubmit = false;
+				$scope.showPostingError = true;
+				$scope.postingError = "An unknown error occured";
+			});
+		}
 
 		$scope.signin = function() {
 			$scope.didUserSubmit = true;

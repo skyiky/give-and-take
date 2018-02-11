@@ -1,7 +1,7 @@
 <div class="view" ng-controller="mainController">
 	<div class="col-xs-3 view">
 		<h1>Give & Take</h1>
-		<button class="btn btn-default1 pull-right message">
+		<button class="btn btn-default1 pull-right message" ng-click="openMessageModal()">
 			<i class="fa fa-envelope-o fa-2x"></i>
 		</button>
 		<br/>
@@ -35,7 +35,7 @@
 
 			<div ng-if="isLoggedIn">
 				<hr>
-				<h4> From you: </h4>
+				<h4> Your postings: </h4>
 				<div class="sidebar-section">
 					<div class="btn-sidebar-grp posting-bar" ng-repeat="post in userPosts">
 						<div ng-click="openModal(post)">
@@ -60,7 +60,7 @@
 			</div>
 
 			<hr>
-			<h4> From everyone: </h4>
+			<h4> Postings near you: </h4>
 			<div class="sidebar-section">
 				<div class="btn-sidebar-grp posting-bar" ng-repeat="post in elsePosts">
 					<div ng-click="openModal(post)">

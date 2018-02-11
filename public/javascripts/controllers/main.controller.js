@@ -11,6 +11,7 @@ angular.module('app')
 		$scope.users = [];
 		$scope.userPosts = [];
 		$scope.elsePosts = [];
+		$scope.messages = [];
 		$scope.foodFilter = true;
 		$scope.shelterFilter = true;
 		$scope.clothesFilter = true;
@@ -131,7 +132,7 @@ angular.module('app')
 								post.id = parseInt(id);
 
 								$scope.posts.push(post);
-								console.log(post);
+								
 								if ($scope.user && post.username.toLowerCase() == $scope.user.username.toLowerCase()) {
 									$scope.userPosts.push(post);
 								} else {
@@ -147,6 +148,14 @@ angular.module('app')
 					$http.get('/auth/users').success(function(data) {
 						if (data.state === 'success') {
 							$scope.users = data.users;
+						}
+
+						if ($scope.user) {
+							$http.get('/message/' + $scope.user.username).success(function(data) {
+								if (data.state === 'success') {
+									$scope.messages = data.messages;
+								}
+							});
 						}
 					});
 				});
@@ -275,6 +284,9 @@ angular.module('app')
 						post: function() {
 							post.email = $scope.users[post.username].email;
 							return post;
+						},
+						messages: function() {
+							return null;
 						}
 					}
 				});
@@ -311,6 +323,9 @@ angular.module('app')
 					},
 					post: function() {
 						return null;
+					},
+					messages: function() {
+						return null;
 					}
 				}
 			});
@@ -324,6 +339,24 @@ angular.module('app')
 			});
 		}
 
+		$scope.openMessageModal = function() {
+			var messageModalInstance = $uibModal.open({
+				templateUrl: 'message.template.html',
+				controller: 'modalController',
+				resolve: {
+					user: function() {
+						return $scope.user;
+					},
+					post: function() {
+						return null;
+					},
+					messages: function() {
+						return $scope.messages;
+					}
+				}
+			})
+		}
+
 		$scope.openSignUpModal = function() {
 			var signUpModalInstance = $uibModal.open({
 				templateUrl: 'signup.template.html',
@@ -334,7 +367,11 @@ angular.module('app')
 					},
 					post: function() {
 						return null;
+					},
+					messages: function() {
+						return null;
 					}
+
 				}
 			});
 
@@ -357,7 +394,11 @@ angular.module('app')
 					},
 					post: function() {
 						return null;
+					},
+					messages: function() {
+						return null;
 					}
+
 				}
 			});
 
@@ -368,6 +409,26 @@ angular.module('app')
 					$scope.usersPosts.push(posting);
 					$scope.completeSetPosts.push(posting);
 				}
+			});
+		}
+
+		$scope.openDeletePostingModal = function($event, post) {
+			$event.stopPropagation();
+			var deletePostingModalInstance = $uibModal.open({
+				templateUrl: 'post.delete.template.html',
+				controller: 'modalController',
+				resolve: {
+					user: function() {
+						return $scope.user;
+					},
+					post: function() {
+						return post;
+					}
+				}
+			});
+
+			deletePostingModalInstance.result.then(function(posting) {
+
 			});
 		}
 
@@ -401,7 +462,11 @@ angular.module('app')
 						},
 						post: function() {
 							return post;
+						},
+						messages: function() {
+							return null;
 						}
+
 					}
 				});
 
@@ -425,7 +490,11 @@ angular.module('app')
 						},
 						post: function() {
 							return post;
+						},
+						messages: function() {
+							return null;
 						}
+
 					}
 				});
 
@@ -447,7 +516,11 @@ angular.module('app')
 					},
 					post: function() {
 						return post;
+					},
+					messages: function() {
+						return null;
 					}
+
 				}
 			})
 		}
