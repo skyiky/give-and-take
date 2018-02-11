@@ -31,7 +31,7 @@
 			</div>
 
 			<hr>
-			<h4> From you: </h4>
+			<h4>Your postings: </h4>
 			<div class="btn-sidebar-grp posting-bar" ng-repeat="post in userPosts">
 				<div ng-click="openModal(post)">
 					<div class="post-title pull-left">
@@ -47,13 +47,13 @@
 					<div class="post-desc">{{post.serviceContent}}</div>
 					<div class="modify-post-btn-grp pull-right">
 						<button class="btn"><i class="fa fa-wrench fa-1.5x" ng-click="openEditPostingModal($event, post)"></i></button>
-						<button class="btn"><i class="fa fa-trash fa-1.5x" ></i></button>
+						<button class="btn"><i class="fa fa-trash fa-1.5x" ng-click="openDeletePostingModal($event, post)"></i></button>
 					</div>
 				</div>
 			</div>
 
 			<hr>
-			<h4> From everyone: </h4>
+			<h4>Postings near you: </h4>
 			<div class="btn-sidebar-grp posting-bar" ng-repeat="post in elsePosts">
 				<div ng-click="openModal(post)">
 					<div class="post-title pull-left">
@@ -68,7 +68,7 @@
 					<div class="post-desc">{{post.serviceContent}}</div>
 					<div class="modify-post-btn-grp pull-right">
 						<button class="btn"><i class="fa fa-wrench fa-1.5x" ng-click="openEditPostingModal($event, post)"></i></button>
-						<button class="btn"><i class="fa fa-trash fa-1.5x"></i></button>
+						<button class="btn"><i class="fa fa-trash fa-1.5x" ng-click="openDeletePostingModal($event, post)"></i></button>
 					</div>	
 				</div>
 			</div>

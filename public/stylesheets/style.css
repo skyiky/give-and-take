@@ -110,6 +110,14 @@ p {
 	clear: both;
 }
 
+.delete-modal {
+	text-align: center;
+}
+
+.del-btns {
+	text-align: center;
+}
+
 #map {
 	z-index: 10;
 	height: 100%;

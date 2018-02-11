@@ -119,8 +119,6 @@ angular.module('app')
 			$scope.showPostingError = false;
 			$scope.postingError = "";
 
-			console.log($scope.post);
-
 			var request = {
 				username: $scope.post.username,
 				id: $scope.post.id,
@@ -161,6 +159,33 @@ angular.module('app')
 			});
 		}
 		
+		$scope.delete = function() {
+			var request = {
+				username: $scope.post.username,
+				id: $scope.post.id
+			};
+			console.log(request);
+			$http.delete('post/delete', request).success(function (data) {
+				if (data.state === 'fail') {
+					$scope.didUserSubmit = false;
+					$scope.showPostingError = true;
+					$scope.postingError = "An unknown error occured";
+				} else if (data.state === 'success') {
+					$scope.didUserSubmit = false;
+					$scope.showPostingError = false;
+					$scope.postingError = "";
+					$uibModalInstance.close(request);
+				} else {
+					$scope.didUserSubmit = false;
+					$scope.showPostingError = true;
+					$scope.postingError = "An unknown error occured";
+				}
+			}, function(err) {
+				$scope.didUserSubmit = false;
+				$scope.showPostingError = true;
+				$scope.postingError = "An unknown error occured";
+			});
+		}
 
 		$scope.signin = function() {
 			$scope.didUserSubmit = true;
