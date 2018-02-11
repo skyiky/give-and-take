@@ -298,6 +298,25 @@ angular.module('app')
 			});
 		}
 
+		$scope.openEditPostingModal = function(post) {
+			var editPostingModalInstance = $uibModal.open({
+				templateUrl: 'post.edit.template.html',
+				controller: 'modalController',
+				resolve: {
+					user: function() {
+						return $scope.user;
+					},
+					post: function() {
+						return post;
+					}
+				}
+			});
+
+			editPostingModalInstance.result.then(function(posting) {
+				addMarker(posting);
+			});
+		}
+
 		$scope.openModal = function() {
 			$uibModal.open({
 				templateUrl: 'post.template.html',
