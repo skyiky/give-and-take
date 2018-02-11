@@ -196,6 +196,7 @@ angular.module('app')
 			$scope.userPosts = [];
 			$scope.elsePosts = [];
 
+
 			$scope.completeSetPosts.forEach(function(post) {
 				post.serviceType.forEach(function(type) {
 					if (categories.includes(type.value)) {
@@ -341,6 +342,8 @@ angular.module('app')
 					$scope.user = user;
 					$scope.isLoggedIn = true;
 					$window.sessionStorage.setItem("user", user.username);
+					$scope.clearMarkers();
+					initPage();
 				}
 			});
 		}
@@ -391,6 +394,8 @@ angular.module('app')
 					$scope.user = user;
 					$scope.isLoggedIn = true;
 					$window.sessionStorage.setItem("user", user.username);
+					$scope.clearMarkers();
+					initPage();
 				}
 			});
 		}
@@ -547,8 +552,10 @@ angular.module('app')
 					},
 					messages: function() {
 						return null;
+					},
+					message: function() {
+						return null;
 					}
-
 				}
 			})
 		}
