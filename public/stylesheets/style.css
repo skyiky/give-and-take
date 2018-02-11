@@ -76,6 +76,7 @@ p {
 .btn-sidebar-grp {
 	text-align: center;
 	left: 35%;
+	cursor:pointer;
 }
 
 .sidebar-section {
