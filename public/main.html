@@ -1,6 +1,6 @@
 <div class="view" ng-controller="mainController">
 	<div class="col-xs-3 view">
-		<h1>Give & Take</h1>
+		<h1>give&take</h1>
 		<button ng-if="isLoggedIn" class="btn btn-default1 pull-right message" ng-click="openMessageModal()">
 			<i class="fa fa-envelope-o fa-2x"></i>
 		</button>
@@ -73,11 +73,6 @@
 								</div>
 								<b>{{post.title}}</b>
 							</div>
-							
-							<div class="modify-post-btn-grp pull-right" style="position: relative; bottom: 14.5px">
-								<button class="btn"><i class="fa fa-wrench fa-1.5x" ng-click="openEditPostingModal($event, post)"></i></button>
-								<button class="btn"><i class="fa fa-trash fa-1.5x" ng-click="openDeletePostingModal($event, post)"></i></button>
-							</div>
 						</div>
 					</div>
 				</div>
@@ -98,11 +93,6 @@
 									<i class="fa fa-archive fa-1.5x contentIcon" ng-if="serviceType.value == 3"></i>
 								</div>
 								<b>{{post.title}}</b>
-							</div>
-							
-							<div class="modify-post-btn-grp pull-right">
-								<button class="btn"><i class="fa fa-wrench fa-1.5x" ng-click="openEditPostingModal($event, post)"></i></button>
-								<button class="btn"><i class="fa fa-trash fa-1.5x"></i></button>
 							</div>
 						</div>
 					</div>
